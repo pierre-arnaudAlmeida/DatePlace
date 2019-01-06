@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/frameLayout"
+    tools:context=".RunAppActivity"
+    android:background="#F0FF3F">
+
+    <ImageView
+        android:id="@+id/logo_run_app"
+        android:layout_width="@dimen/logo_run_app_width"
+        android:layout_height="@dimen/logo_run_app_height"
+        android:layout_marginTop="@dimen/logo_run_app_marginTop"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher" />
+    <ProgressBar
+        android:id="@+id/progressBar_run_app"
+        android:layout_width="@dimen/progressBar_width"
+        android:layout_height="@dimen/progressBar_height"
+        android:layout_marginStart="@dimen/progressBar_marginStart"
+        app:layout_constraintBottom_toBottomOf="@id/logo_run_app"
+        app:layout_constraintStart_toStartOf="@id/logo_run_app"
+        app:layout_constraintTop_toTopOf="@id/logo_run_app"
+        app:layout_constraintVertical_bias="0.796"/>
+    <Button
+        android:id="@+id/button_connexion"
+        android:layout_width="@dimen/button_connexion_run_app_width"
+        android:layout_height="@dimen/button_connexion_run_app_height"
+        android:layout_marginStart="@dimen/button_connexion_run_app_marginStart"
+        android:layout_marginTop="@dimen/button_connexion_run_app_marginTop"
+        android:layout_marginEnd="@dimen/button_connexion_run_app_marginEnd"
+        android:background="@drawable/background_button_connexion"
+        android:text="@string/button_connexion_text"
+        android:textSize="@dimen/button_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_run_app"
+        tools:ignore="MissingConstraint"/> <!--Possible a supprimer -->
+
+    <Button
+        android:id="@+id/button_inscription"
+        android:layout_width="@dimen/button_inscription_run_app_width"
+        android:layout_height="@dimen/button_inscription_run_app_height"
+        android:layout_marginStart="@dimen/button_inscription_run_app_marginStart"
+        android:layout_marginTop="@dimen/button_inscription_run_app_marginTop"
+        android:layout_marginEnd="@dimen/button_inscription_run_app_marginEnd"
+        android:background="@drawable/background_button_connexion"
+        android:text="@string/button_inscription_text"
+        android:textSize="@dimen/button_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_connexion"/>
+</android.support.constraint.ConstraintLayout>

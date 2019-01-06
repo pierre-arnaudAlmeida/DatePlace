@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#979595"
+    tools:context=".InscriptionActivity">
+
+    <ImageView
+        android:id="@+id/logo_inscription_app"
+        android:layout_width="@dimen/logo_inscription_app_width"
+        android:layout_height="@dimen/logo_inscription_app_height"
+        android:layout_marginStart="@dimen/logo_inscription_app_marginStart"
+        android:layout_marginTop="@dimen/logo_inscription_app_marginTop"
+        android:layout_marginEnd="@dimen/logo_inscription_app_marginEnd"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pseudo_title"
+        android:layout_width="@dimen/title_field_inscription_width"
+        android:layout_height="@dimen/title_field_inscription_height"
+        android:layout_marginStart="@dimen/title_field_inscription_marginStart"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:text="@string/title_pseudo_text"
+        android:textColor="#000"
+        android:textSize="@dimen/inscription_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_inscription_app" />
+
+    <EditText
+        android:id="@+id/newpseudo"
+        android:layout_width="@dimen/input_text_inscription_width"
+        android:layout_height="@dimen/input_text_inscription_height"
+        android:layout_marginStart="@dimen/input_text_inscription_marginStart"
+        android:layout_marginTop="@dimen/input_text_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:background="#AEAEAE"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_inscription_app" />
+
+    <TextView
+        android:id="@+id/nom_title"
+        android:layout_width="@dimen/title_field_inscription_width"
+        android:layout_height="@dimen/title_field_inscription_height"
+        android:layout_marginStart="@dimen/title_field_inscription_marginStart"
+        android:layout_marginTop="@dimen/title_field_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:text="@string/title_nom_text"
+        android:textColor="#000"
+        android:textSize="@dimen/inscription_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pseudo_title" />
+
+    <EditText
+        android:id="@+id/newnom"
+        android:layout_width="@dimen/input_text_inscription_width"
+        android:layout_height="@dimen/input_text_inscription_height"
+        android:layout_marginStart="@dimen/input_text_inscription_marginStart"
+        android:layout_marginTop="@dimen/input_text_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:background="#AEAEAE"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newpseudo" />
+
+    <TextView
+        android:id="@+id/adressemail_title"
+        android:layout_width="@dimen/title_field_inscription_width"
+        android:layout_height="@dimen/title_field_inscription_height"
+        android:layout_marginStart="@dimen/title_field_inscription_marginStart"
+        android:layout_marginTop="@dimen/title_field_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:text="@string/title_adressemail_text"
+        android:textColor="#000"
+        android:textSize="@dimen/inscription_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nom_title" />
+
+    <EditText
+        android:id="@+id/newadressemail"
+        android:layout_width="@dimen/input_text_inscription_width"
+        android:layout_height="@dimen/input_text_inscription_height"
+        android:layout_marginStart="@dimen/input_text_inscription_marginStart"
+        android:layout_marginTop="@dimen/input_text_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:background="#AEAEAE"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newnom" />
+
+    <TextView
+        android:id="@+id/mot_de_passe_title"
+        android:layout_width="@dimen/title_field_inscription_width"
+        android:layout_height="@dimen/title_field_inscription_height"
+        android:layout_marginStart="@dimen/title_field_inscription_marginStart"
+        android:layout_marginTop="@dimen/title_field_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:text="@string/title_password_text"
+        android:textColor="#000"
+        android:textSize="@dimen/inscription_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adressemail_title" />
+
+    <EditText
+        android:id="@+id/newmot_de_passe"
+        android:layout_width="@dimen/input_text_inscription_width"
+        android:layout_height="@dimen/input_text_inscription_height"
+        android:layout_marginStart="@dimen/input_text_inscription_marginStart"
+        android:layout_marginTop="@dimen/input_text_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:background="#AEAEAE"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newadressemail" />
+
+    <TextView
+        android:id="@+id/date_de_naissance_title"
+        android:layout_width="@dimen/title_field_inscription_width"
+        android:layout_height="@dimen/title_field_inscription_height"
+        android:layout_marginStart="@dimen/title_field_inscription_marginStart"
+        android:layout_marginTop="@dimen/title_field_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:text="@string/title_date_of_birth_text"
+        android:textColor="#000"
+        android:textSize="@dimen/inscription_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mot_de_passe_title" />
+
+    <EditText
+        android:id="@+id/newdate_de_naissance"
+        android:layout_width="@dimen/input_text_inscription_width"
+        android:layout_height="@dimen/input_text_inscription_height"
+        android:layout_marginStart="@dimen/input_text_inscription_marginStart"
+        android:layout_marginTop="@dimen/input_text_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:background="#AEAEAE"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newmot_de_passe" />
+
+    <TextView
+        android:id="@+id/goal_title"
+        android:layout_width="@dimen/title_field_inscription_width"
+        android:layout_height="@dimen/title_field_inscription_height"
+        android:layout_marginStart="@dimen/title_field_inscription_marginStart"
+        android:layout_marginTop="@dimen/title_field_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:text="@string/title_goal_text"
+        android:textColor="#000"
+        android:textSize="@dimen/inscription_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_de_naissance_title" />
+
+    <Spinner
+        android:id="@+id/newgoal"
+        android:layout_width="@dimen/input_text_inscription_width"
+        android:layout_height="@dimen/input_text_inscription_height"
+        android:layout_marginStart="@dimen/input_text_inscription_marginStart"
+        android:layout_marginTop="@dimen/input_text_inscription_marginTop"
+        android:layout_marginEnd="@dimen/input_text_inscription_marginEnd"
+        android:background="#AEAEAE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newdate_de_naissance" />
+
+    <Button
+        android:id="@+id/button_goback"
+        android:layout_width="@dimen/button_goback_width"
+        android:layout_height="@dimen/button_goback_height"
+        android:layout_marginStart="@dimen/button_goback_marginStart"
+        android:layout_marginBottom="@dimen/button_goback_marginBottom"
+        android:background="@drawable/background_button_connexion"
+        android:text="@string/button_goback_text"
+        android:textColor="#000"
+        android:textSize="@dimen/button_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_inscrip"
+        android:layout_width="@dimen/button_inscrip_width"
+        android:layout_height="@dimen/button_inscrip_height"
+        android:layout_marginStart="@dimen/button_inscrip_marginStart"
+        android:layout_marginEnd="@dimen/button_inscrip_marginEnd"
+        android:layout_marginBottom="@dimen/button_inscrip_marginBottom"
+        android:background="@drawable/background_button_connexion"
+        android:text="@string/button_inscrip_text"
+        android:textColor="#000"
+        android:textSize="@dimen/button_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_goback" />
+</android.support.constraint.ConstraintLayout>

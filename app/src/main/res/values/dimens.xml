@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_text_size">18dp</dimen>
+    <dimen name="inscription_text_size">14dp</dimen>
+
+    <dimen name="button_goback_width">80dp</dimen>
+    <dimen name="button_goback_height">40dp</dimen>
+    <dimen name="button_goback_marginStart">102dp</dimen>
+    <dimen name="button_goback_marginBottom">40dp</dimen>
+    <!-- activity_run_ap -->
+    <dimen name="logo_run_app_width">300dp</dimen>
+    <dimen name="logo_run_app_height">300dp</dimen>
+    <dimen name="logo_run_app_marginTop">70dp</dimen>
+
+    <dimen name="progressBar_width">142dp</dimen>
+    <dimen name="progressBar_height">128dp</dimen>
+    <dimen name="progressBar_marginStart">168dp</dimen>
+
+    <dimen name="button_connexion_run_app_width">180dp</dimen>
+    <dimen name="button_connexion_run_app_height">40dp</dimen>
+    <dimen name="button_connexion_run_app_marginStart">102dp</dimen>
+    <dimen name="button_connexion_run_app_marginTop">30dp</dimen>
+    <dimen name="button_connexion_run_app_marginEnd">102dp</dimen>
+
+    <dimen name="button_inscription_run_app_width">180dp</dimen>
+    <dimen name="button_inscription_run_app_height">40dp</dimen>
+    <dimen name="button_inscription_run_app_marginStart">102dp</dimen>
+    <dimen name="button_inscription_run_app_marginTop">10dp</dimen>
+    <dimen name="button_inscription_run_app_marginEnd">102dp</dimen>
+    <!-- activity_connexion -->
+    <dimen name="logo_connexion_app_width">300dp</dimen>
+    <dimen name="logo_connexion_app_height">300dp</dimen>
+    <dimen name="logo_connexion_app_marginStart">70dp</dimen>
+    <dimen name="logo_connexion_app_marginTop">40dp</dimen>
+    <dimen name="logo_connexion_app_marginEnd">70dp</dimen>
+
+    <dimen name="connexion_identifier_width">180dp</dimen>
+    <dimen name="connexion_identifier_height">40dp</dimen>
+    <dimen name="connexion_identifier_marginStart">102dp</dimen>
+    <dimen name="connexion_identifier_marginTop">40dp</dimen>
+    <dimen name="connexion_identifier_marginEnd">102dp</dimen>
+    <dimen name="connexion_identifier_paddingTop">4dp</dimen>
+    <dimen name="connexion_identifier_paddingLeft">20dp</dimen>
+
+    <dimen name="connexion_password_width">180dp</dimen>
+    <dimen name="connexion_password_height">40dp</dimen>
+    <dimen name="connexion_password_marginStart">102dp</dimen>
+    <dimen name="connexion_password_marginTop">10dp</dimen>
+    <dimen name="connexion_password_marginEnd">102dp</dimen>
+    <dimen name="connexion_password_paddingTop">4dp</dimen>
+    <dimen name="connexion_password_paddingLeft">20dp</dimen>
+
+    <dimen name="button_connect_width">65dp</dimen>
+    <dimen name="button_connect_height">40dp</dimen>
+    <dimen name="button_connect_marginStart">15dp</dimen>
+    <dimen name="button_connect_marginEnd">102dp</dimen>
+    <dimen name="button_connect_marginBottom">40dp</dimen>
+    <!-- activity_inscription -->
+    <dimen name="logo_inscription_app_width">100dp</dimen>
+    <dimen name="logo_inscription_app_height">100dp</dimen>
+    <dimen name="logo_inscription_app_marginStart">117dp</dimen>
+    <dimen name="logo_inscription_app_marginTop">25dp</dimen>
+    <dimen name="logo_inscription_app_marginEnd">117dp</dimen>
+
+    <dimen name="title_field_inscription_width">180dp</dimen>
+    <dimen name="title_field_inscription_height">17dp</dimen>
+    <dimen name="title_field_inscription_marginStart">100dp</dimen>
+    <dimen name="title_field_inscription_marginTop">39dp</dimen>
+
+    <dimen name="input_text_inscription_width">180dp</dimen>
+    <dimen name="input_text_inscription_height">30dp</dimen>
+    <dimen name="input_text_inscription_marginStart">100dp</dimen>
+    <dimen name="input_text_inscription_marginTop">25dp</dimen>
+    <dimen name="input_text_inscription_marginEnd">100dp</dimen>
+
+    <dimen name="button_inscrip_width">120dp</dimen>
+    <dimen name="button_inscrip_height">40dp</dimen>
+    <dimen name="button_inscrip_marginStart">15dp</dimen>
+    <dimen name="button_inscrip_marginEnd">80dp</dimen>
+    <dimen name="button_inscrip_marginBottom">40dp</dimen>
+</resources>
