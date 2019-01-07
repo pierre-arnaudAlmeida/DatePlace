@@ -40,15 +40,15 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        //        this.button_inscription=findViewById(R.id.button_inscrip);
-//        button_inscription.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent inscription = new Intent(getApplicationContext(),nomdelacarte.class);
-//                startActivity(inscription);
-//                finish();
-//            }
-//        });
+                this.button_inscription=findViewById(R.id.button_inscrip);
+        button_inscription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inscription = new Intent(getApplicationContext(),MapActivity.class);
+                startActivity(inscription);
+                finish();
+            }
+        });
     }
 
     @Override

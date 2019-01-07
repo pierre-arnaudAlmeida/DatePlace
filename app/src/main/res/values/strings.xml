@@ -19,4 +19,11 @@
         <item>un lieu pour sortir avec mes parents</item>
     </string-array>
     <string name="twitterUsername">\@joeyni</string>
+
+
+    <string name="access_token">pk.eyJ1IjoiZGVzbGF5IiwiYSI6ImNqcTQxdXM4dTFrYW00OG11ZHJieHR1YjQifQ.x0wMIY5il7ubistZeYVcEw</string>
+
+    <string name="title_activity_map">MapActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
