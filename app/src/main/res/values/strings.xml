@@ -2,7 +2,7 @@
     <string name="app_name">DatePlace</string>
     <string name="button_connexion_text">Se Connecter</string>
     <string name="button_inscription_text">S\'inscrire</string>
-    <string name="connexion_identifier_HintText">Identifiant/Email</string>
+    <string name="connexion_identifier_HintText">Email</string>
     <string name="connexion_password_HintText">Mot de passe</string>
     <string name="button_goback_text">Retour</string>
     <string name="button_connect_text">GOOO</string>

@@ -36,6 +36,14 @@ package="fr.blackmamba.dateplaceapp">
     <activity
         android:name=".PlaceActivity"
         android:theme="@style/AppTheme" />
+    <activity
+        android:name=".UserProfilActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/AppTheme" />
+    <activity
+        android:name=".UserSettingActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/AppTheme" />
     <activity android:name=".MapActivity"
         android:theme="@style/AppTheme">
     </activity>

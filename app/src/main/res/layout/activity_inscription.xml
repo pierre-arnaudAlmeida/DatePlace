@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/pseudo_title"
+        android:id="@+id/prenom_title"
         android:layout_width="@dimen/title_field_inscription_width"
         android:layout_height="@dimen/title_field_inscription_height"
         android:layout_marginStart="@dimen/title_field_inscription_marginStart"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logo_inscription_app" />
 
     <EditText
-        android:id="@+id/newpseudo"
+        android:id="@+id/new_prenom"
         android:layout_width="@dimen/input_text_inscription_width"
         android:layout_height="@dimen/input_text_inscription_height"
         android:layout_marginStart="@dimen/input_text_inscription_marginStart"
@@ -57,10 +57,10 @@
         android:textSize="@dimen/inscription_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pseudo_title" />
+        app:layout_constraintTop_toBottomOf="@+id/prenom_title" />
 
     <EditText
-        android:id="@+id/newnom"
+        android:id="@+id/new_nom"
         android:layout_width="@dimen/input_text_inscription_width"
         android:layout_height="@dimen/input_text_inscription_height"
         android:layout_marginStart="@dimen/input_text_inscription_marginStart"
@@ -70,7 +70,7 @@
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newpseudo" />
+        app:layout_constraintTop_toBottomOf="@+id/new_prenom" />
 
     <TextView
         android:id="@+id/adressemail_title"
@@ -98,7 +98,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newnom" />
+        app:layout_constraintTop_toBottomOf="@+id/new_nom" />
 
     <TextView
         android:id="@+id/mot_de_passe_title"
