@@ -1,13 +1,9 @@
 package fr.blackmamba.dateplaceapp;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,8 +12,6 @@ import com.android.volley.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import fr.blackmamba.dateplaceapp.backgroundtask.LoginRequest;
 
 
 public class ConnexionActivity extends AppCompatActivity {
