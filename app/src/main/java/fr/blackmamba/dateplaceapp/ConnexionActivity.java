@@ -64,7 +64,6 @@ public class ConnexionActivity extends AppCompatActivity {
                         }
                     }
                 };
-                LoginRequest loginResuqest = new LoginRequest(email, password, responseListener);
                 //Intent connect = new Intent(getApplicationContext(),UserProfilActivity.class);
                 //startActivity(connect);
                 //finish();

@@ -1,15 +1,20 @@
 package fr.blackmamba.dateplaceapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -35,18 +40,18 @@ public class InscriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inscription);
 
-        Spinner goal = findViewById(R.id.newgoal);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.goal, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        goal.setAdapter(adapter);
-        //goal.setOnItemSelectedListener(this);
+//        Spinner goal = findViewById(R.id.newgoal);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.goal, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        goal.setAdapter(adapter);
+//        goal.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
         name = (EditText) findViewById(R.id.new_prenom);
         last_name = (EditText) findViewById(R.id.new_nom);
         password = (EditText) findViewById(R.id.newmot_de_passe);
         email = (EditText) findViewById(R.id.newadressemail);
         date_de_naissance = (EditText) findViewById(R.id.newdate_de_naissance);
-//        @SuppressLint("WrongViewCast") final EditText but = (EditText) findViewById(R.id.newgoal);
+        //but = (EditText) findViewById(R.id.newgoal);
         AddData = new AddDataAsyncTask();
 
         this.button_goback = findViewById(R.id.button_goback);
@@ -63,15 +68,24 @@ public class InscriptionActivity extends AppCompatActivity {
         button_inscription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddData.execute();
-                Intent goback = new Intent(getApplicationContext(), MapActivity.class);
-                startActivity(goback);
-                finish();
+                if ( name.getText().toString().equals("") || last_name.getText().toString().equals("") || password.getText().toString().equals("") || email.getText().toString().equals("") || date_de_naissance.getText().toString().equals("")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
+                   builder.setMessage("Inscription Failed")
+                           .setNegativeButton("Retry",null)
+                           .create()
+                           .show();
+                }else{
+                    AddData = new AddDataAsyncTask();
+                    AddData.execute();
+                    Intent gobefore = new Intent(getApplicationContext(), ConnexionActivity.class);
+                    startActivity(gobefore);
+                    finish();
+                }
             }
         });
     }
 
-    private class AddDataAsyncTask extends AsyncTask<Void, Void, Void> {
+    public class AddDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -81,10 +95,13 @@ public class InscriptionActivity extends AppCompatActivity {
 
             List<NameValuePair> nameValuePair = new ArrayList<>(1);
 
-            nameValuePair.add(new BasicNameValuePair("user_id", name.getText().toString()));
+            nameValuePair.add(new BasicNameValuePair("name", name.getText().toString()));
+            nameValuePair.add(new BasicNameValuePair("last_name", last_name.getText().toString()));
             nameValuePair.add(new BasicNameValuePair("password", password.getText().toString()));
+            nameValuePair.add(new BasicNameValuePair("email", email.getText().toString()));
+            nameValuePair.add(new BasicNameValuePair("date_de_naissance", date_de_naissance.getText().toString()));
+            //nameValuePair.add(new BasicNameValuePair("goal", but.getText().toString()));
 
-            // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(urlAdd, ServiceHandler.POST, nameValuePair);
 
             Log.d("Response: ", jsonStr);
@@ -96,13 +113,10 @@ public class InscriptionActivity extends AppCompatActivity {
                     message = jsonObj.getString("message");
                     Log.i("success", String.valueOf(success));
                     Log.i("message", message);
-
                 } catch (JSONException e) {
-
                     e.printStackTrace();
                 }
             }
-
             Log.i("add", " end doInBackground");
             return null;
         }
