@@ -13,6 +13,7 @@
     <string name="title_password_text">Mot de Passe</string>
     <string name="title_date_of_birth_text">Date de Naissance</string>
     <string name="title_goal_text">Ce que je recherche</string>
+    <string name="calendar">Calendrier</string>
     <string-array name="goal">
         <item>Date Place</item>
         <item>Un lieu pour entre potes</item>

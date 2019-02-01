@@ -142,7 +142,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mot_de_passe_title" />
 
-    <EditText
+    <Button
         android:id="@+id/newdate_de_naissance"
         android:layout_width="@dimen/input_text_inscription_width"
         android:layout_height="@dimen/input_text_inscription_height"
@@ -152,9 +152,12 @@
         android:background="#AEAEAE"
         android:ems="10"
         android:inputType="date"
+        android:text="@string/calendar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newmot_de_passe" />
+        app:layout_constraintTop_toBottomOf="@+id/newmot_de_passe"
+        android:startYear="1900"
+        android:endYear="2050"/>
 
     <TextView
         android:id="@+id/goal_title"
