@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.Response;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -23,26 +21,38 @@ import java.util.List;
 
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 
-
 public class ConnexionActivity extends AppCompatActivity {
+
     private Button button_goback;
     private Button button_connect;
     EditText email,password;
     String urlAdd = "https://dateplaceapp.000webhostapp.com/login.php";
-    ConnexionActivity.GetDataAsyncTask GetData;
     String message;
+    ConnexionActivity.GetDataAsyncTask GetData;
     int success;
 
+    /**
+     * Affiche l'activité Connexion
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
 
+        //Affectation des champs à des variables
         email = (EditText) findViewById(R.id.connexion_identifier);
         password = (EditText) findViewById(R.id.connexion_password);
 
+        //Ajout d'un écouteur sur le bouton de retour
         this.button_goback=findViewById(R.id.button_goback);
         button_goback.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Si l'utilisateur clique sur le bouton retour, il sera redirigé vers l'activité
+             * RunAppActivity qui est la première activité de l'application
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 Intent goback = new Intent(getApplicationContext(), RunAppActivity.class);
@@ -50,14 +60,23 @@ public class ConnexionActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        //Ajout d'un écouteur sur le bouton de conection
         this.button_connect=findViewById(R.id.button_connect);
         button_connect.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Apres le clic sur le bouton
+             * Si les champs sont vide ou bien que l'adresse mail ne contient pas de @
+             * alors une popup de dialogue apparait pour prevenir l'utilisateur
+             * Sinon on execute la methode pour transmettre les informations au serveur
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if ( email.getText().toString().equals("") || password.getText().toString().equals("")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
                     builder.setMessage("Il manque mot de passe/email")
-                            .setNegativeButton("Retry",null)
+                            .setNegativeButton("Recommencer",null)
                             .create()
                             .show();
                 }else{
@@ -68,7 +87,7 @@ public class ConnexionActivity extends AppCompatActivity {
                     }else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
                         builder.setMessage("Vous n'avez pas entrer une adresse email :)")
-                                .setNegativeButton("Retry",null)
+                                .setNegativeButton("Recommencer",null)
                                 .create()
                                 .show();
                     }
@@ -78,11 +97,17 @@ public class ConnexionActivity extends AppCompatActivity {
     }
 
     public class GetDataAsyncTask extends AsyncTask<Void, Void, Void> {
-
+        /**
+         * Methode qui convertit les différentes informations a transmettre au serveur dans un tableau
+         * les transmets grace a la methode makeSerciveCall
+         * et ensuite récupere un objet JSON au format String
+         * on récupere les valeurs présente au format JSON et on les stock dans des varaibles
+         * @param params
+         * @return
+         */
         @Override
         protected Void doInBackground(Void... params) {
             Log.i("add", " start doInBackground");
-
             ServiceHandler sh = new ServiceHandler();
 
             List<NameValuePair> nameValuePair = new ArrayList<>(1);
@@ -91,11 +116,10 @@ public class ConnexionActivity extends AppCompatActivity {
             nameValuePair.add(new BasicNameValuePair("password", password.getText().toString()));
 
             String jsonStr = sh.makeServiceCall(urlAdd, ServiceHandler.POST, nameValuePair);
-
             Log.d("Response: ", jsonStr);
+
             if (jsonStr != null) {
                 try {
-
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     success = jsonObj.getInt("success");
                     message = jsonObj.getString("message");
@@ -108,6 +132,13 @@ public class ConnexionActivity extends AppCompatActivity {
             Log.i("add", " end doInBackground");
             return null;
         }
+
+        /**
+         * Methode qui s'execute apres la methode doInBackground et permet en fonction du résultat obtenu suite a la requete
+         * de redirigé l'utilisateur vers la Carte (l'activité suivante) ou bien de generer une fenetre de dialogue
+         * pour signifier l'echec de la connection et donc la redirection vers la page connection
+         * @param result    resultat de la methode doInBackground
+         */
         @Override
         protected void onPostExecute(Void result){
             super.onPostExecute(result);
@@ -117,8 +148,8 @@ public class ConnexionActivity extends AppCompatActivity {
                 finish();
             }else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
-                builder.setMessage("Connexion Failed");
-                builder.setNegativeButton("Retry", new DialogInterface.OnClickListener() {
+                builder.setMessage("La Connection à échoué");
+                builder.setNegativeButton("Recommencer", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent goback = new Intent(ConnexionActivity.this, ConnexionActivity.class);

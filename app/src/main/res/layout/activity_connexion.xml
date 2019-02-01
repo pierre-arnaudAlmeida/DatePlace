@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="#F0FF3F"
     tools:context=".ConnexionActivity">
+
+    <!-- Logo Connexion-->
     <ImageView
         android:id="@+id/logo_connexion_app"
         android:layout_width="@dimen/logo_connexion_app_width"
@@ -18,6 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher"/>
+
+    <!-- Champs email de connexion-->
     <EditText
         android:id="@+id/connexion_identifier"
         android:layout_width="@dimen/connexion_identifier_width"
@@ -37,6 +41,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_connexion_app"/>
+
+    <!-- Champs password de connexion-->
     <EditText
         android:id="@+id/connexion_password"
         android:layout_width="@dimen/connexion_password_width"
@@ -56,6 +62,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/connexion_identifier"/>
+
+    <!-- Bouton de retour-->
     <Button
         android:id="@+id/button_goback"
         android:layout_width="@dimen/button_goback_width"
@@ -68,6 +76,8 @@
         android:textSize="@dimen/button_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- Bouton de connexion-->
     <Button
         android:id="@+id/button_connect"
         android:layout_width="@dimen/button_connect_width"

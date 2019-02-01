@@ -8,6 +8,7 @@
     tools:context=".RunAppActivity"
     android:background="#F0FF3F">
 
+    <!-- Logo Application-->
     <ImageView
         android:id="@+id/logo_run_app"
         android:layout_width="@dimen/logo_run_app_width"
@@ -19,6 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher" />
+
+    <!-- Barre qui tourne en cercle-->
     <ProgressBar
         android:id="@+id/progressBar_run_app"
         android:layout_width="@dimen/progressBar_width"
@@ -28,6 +31,8 @@
         app:layout_constraintStart_toStartOf="@id/logo_run_app"
         app:layout_constraintTop_toTopOf="@id/logo_run_app"
         app:layout_constraintVertical_bias="0.796"/>
+
+    <!-- Bouton de connexion-->
     <Button
         android:id="@+id/button_connexion"
         android:layout_width="@dimen/button_connexion_run_app_width"
@@ -43,6 +48,7 @@
         app:layout_constraintTop_toBottomOf="@id/logo_run_app"
         tools:ignore="MissingConstraint"/> <!--Possible a supprimer -->
 
+    <!-- Bouton de retour-->
     <Button
         android:id="@+id/button_inscription"
         android:layout_width="@dimen/button_inscription_run_app_width"

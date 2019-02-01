@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -32,36 +31,49 @@ import java.util.List;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 
 public class InscriptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+
     private Button button_goback;
     private Button button_inscription;
+    private DatePickerDialog.OnDateSetListener date_de_naissance_Listener;
     EditText name,last_name,password,email;
     Button date_de_naissance;
-    private DatePickerDialog.OnDateSetListener date_de_naissance_Listener;
     Spinner but;
     String urlAdd = "https://dateplaceapp.000webhostapp.com/insert_user.php";
-    AddDataAsyncTask AddData;
     String message,birthday;
-    int success, year,month,day;
+    int success,year,month,day;
+    AddDataAsyncTask AddData;
 
+    /**
+     * Affiche l'activité Inscription
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inscription);
 
+        //Affectation de la liste déroulante
         Spinner goal = findViewById(R.id.newgoal);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.goal, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         goal.setAdapter(adapter);
         goal.setOnItemSelectedListener(this);
 
+        //Affectation des champs à des variables
         name = (EditText) findViewById(R.id.new_prenom);
         last_name = (EditText) findViewById(R.id.new_nom);
         password = (EditText) findViewById(R.id.newmot_de_passe);
         email = (EditText) findViewById(R.id.newadressemail);
         but = (Spinner) findViewById(R.id.newgoal);
 
+        //Ajout d'un écouteur au bouton retour
         this.button_goback = findViewById(R.id.button_goback);
         button_goback.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Si l'utilisateur clique sur le bouton retour, il sera redirigé vers l'activité
+             * RunAppActivity
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 Intent goback = new Intent(getApplicationContext(), RunAppActivity.class);
@@ -70,8 +82,14 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
+        //Ajout d'un écouteur au bouton date_de_naissance
         this.date_de_naissance = (Button) findViewById(R.id.newdate_de_naissance);
         date_de_naissance.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Quand l'utilisateur clique sur le bouton Calendrier il y a une popup qui s'ouvre lui permettant
+             * de choisir une date de naissance.
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
@@ -89,6 +107,14 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             }
         });
         date_de_naissance_Listener = new DatePickerDialog.OnDateSetListener(){
+            /**
+             * Recuperation des valeurs saisie par l'utilisateur dans le calendrier
+             * pour ensuite les stockés dans un string
+             * @param datePicker
+             * @param year  année
+             * @param month mois
+             * @param day   jour
+             */
             @Override
             public void onDateSet(DatePicker datePicker,int year,int month,int day){
                 month=month+1;
@@ -96,14 +122,21 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             }
         };
 
+        //Ajout d'un écouteur au bouton inscription
         this.button_inscription = findViewById(R.id.button_inscrip);
         button_inscription.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Au moment du clic sur le bouton si l'un des champs n"est pas renseigné ou bien
+             * que l'adresse mail ne contient pas de @, cela génère une fenetre popup avec un message d'erreur
+             * Et si l'ensemble des condition sont respecter on execute la methode pour communiquer avec le serveur
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if ( name.getText().toString().equals("") || last_name.getText().toString().equals("") || password.getText().toString().equals("") || email.getText().toString().equals("")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
-                   builder.setMessage("Les champs ne sont pas tous plein")
-                           .setNegativeButton("Retry",null)
+                   builder.setMessage("Les champs ne sont pas tous renseigner")
+                           .setNegativeButton("Recommencer",null)
                            .create()
                            .show();
                 }else{
@@ -114,7 +147,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
                     }else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
                         builder.setMessage("Vous n'avez pas entrer une adresse email :)")
-                                .setNegativeButton("Retry",null)
+                                .setNegativeButton("Recommencer",null)
                                 .create()
                                 .show();
                     }
@@ -136,6 +169,14 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
 
     public class AddDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
+        /**
+         * Methode qui convertit les différentes informations a transmettre au serveur dans un tableau
+         * les transmets grace a la methode makeSerciveCall
+         * et ensuite récupere un objet JSON au format String
+         * on récupere les valeurs présente au format JSON et on les stock dans des varaibles
+         * @param params
+         * @return
+         */
         @Override
         protected Void doInBackground(Void... params) {
             Log.i("add", " start doInBackground");
@@ -145,7 +186,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             List<NameValuePair> nameValuePair = new ArrayList<>(1);
 
             nameValuePair.add(new BasicNameValuePair("name", name.getText().toString()));
-            nameValuePair.add(new BasicNameValuePair("last_name", last_name.getText().toString()));
+            nameValuePair.add(new BasicNameValuePair("last_name", last_name.getText().toString().toUpperCase()));
             nameValuePair.add(new BasicNameValuePair("password", password.getText().toString()));
             nameValuePair.add(new BasicNameValuePair("email", email.getText().toString()));
             nameValuePair.add(new BasicNameValuePair("date_de_naissance", birthday));
@@ -169,6 +210,13 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             Log.i("add", " end doInBackground");
             return null;
         }
+
+        /**
+         * Methode qui s'execute apres la methode doInBackground et permet en fonction du résultat obtenu suite a la requete
+         * de redirigé l'utilisateur vers la l'activité Connexion ou bien de generer une fenetre de dialogue
+         * pour signifier l'echec de l'inscription
+         * @param result    resultat de la methode doInBackground
+         */
         @Override
         protected void onPostExecute(Void result){
             super.onPostExecute(result);
@@ -178,8 +226,8 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
                    finish();
                }else {
                    AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
-                   builder.setMessage("Inscription Failed");
-                   builder.setNegativeButton("Retry", new DialogInterface.OnClickListener() {
+                   builder.setMessage("L'inscription à échoué");
+                   builder.setNegativeButton("Recommencer", new DialogInterface.OnClickListener() {
                        @Override
                        public void onClick(DialogInterface dialog, int which) {
                             Intent goback = new Intent(InscriptionActivity.this, InscriptionActivity.class);
