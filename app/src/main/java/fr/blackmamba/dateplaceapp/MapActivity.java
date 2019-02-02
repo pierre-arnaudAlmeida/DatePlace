@@ -1,9 +1,12 @@
 package fr.blackmamba.dateplaceapp;
 
+import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineListener;
@@ -21,12 +24,14 @@ import com.mapbox.mapboxsdk.plugins.locationlayer.LocationLayerPlugin;
 import com.mapbox.mapboxsdk.plugins.locationlayer.modes.CameraMode;
 import com.mapbox.mapboxsdk.plugins.locationlayer.modes.RenderMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, LocationEngineListener, PermissionsListener {
     private MapView mapView;
     private MapboxMap map;
     private PermissionsManager permissionManager;
+    private Button button;
 
 
     private LocationEngine locationEngine;
@@ -46,6 +51,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 map = mapboxMap);
 
         mapView.getMapAsync(this);
+        this.button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Si l'utilisateur clique sur le bouton retour, il sera redirigé vers l'activité
+             * SearchActivity
+             * @param v
+             */
+            @Override
+            public void onClick(View v) {
+                Intent button = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(button);
+                finish();
+            }
+        });
+
+
     }
 
     @Override
