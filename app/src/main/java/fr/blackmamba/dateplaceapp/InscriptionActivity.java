@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import fr.blackmamba.dateplaceapp.backgroundtask.ConnexionInternet;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
+import fr.blackmamba.dateplaceapp.backgroundtask.ConnexionInternet;
 
 public class InscriptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -85,11 +87,11 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
         //Ajout d'un écouteur au bouton date_de_naissance
         this.date_de_naissance = (Button) findViewById(R.id.newdate_de_naissance);
         date_de_naissance.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Quand l'utilisateur clique sur le bouton Calendrier il y a une popup qui s'ouvre lui permettant
-             * de choisir une date de naissance.
-             * @param v
-             */
+                /**
+                 * Quand l'utilisateur clique sur le bouton Calendrier il y a une popup qui s'ouvre lui permettant
+                 * de choisir une date de naissance.
+                 * @param v
+                 */
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
@@ -128,6 +130,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             /**
              * Au moment du clic sur le bouton si l'un des champs n"est pas renseigné ou bien
              * que l'adresse mail ne contient pas de @, cela génère une fenetre popup avec un message d'erreur
+             * Si le téléphone n'as pas de connexion internet une fenetre de popup s'ouvrira
              * Et si l'ensemble des condition sont respecter on execute la methode pour communiquer avec le serveur
              * @param v
              */
@@ -135,15 +138,23 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             public void onClick(View v) {
                 if ( name.getText().toString().equals("") || last_name.getText().toString().equals("") || password.getText().toString().equals("") || email.getText().toString().equals("")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
-                   builder.setMessage("Les champs ne sont pas tous renseigner")
+                    builder.setMessage("Les champs ne sont pas tous renseigner")
                            .setNegativeButton("Recommencer",null)
                            .create()
                            .show();
                 }else{
                     int testemail = email.getText().toString().indexOf("@");
                     if (testemail != -1) {
-                    AddData = new AddDataAsyncTask();
-                    AddData.execute();
+                        if(ConnexionInternet.isConnectedInternet(InscriptionActivity.this)) {
+                            AddData = new AddDataAsyncTask();
+                            AddData.execute();
+                        }else{
+                            AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
+                            builder.setMessage("Vous n'avez pas de connexion internet")
+                                    .setNegativeButton("Recommencer",null)
+                                    .create()
+                                    .show();
+                        }
                     }else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
                         builder.setMessage("Vous n'avez pas entrer une adresse email :)")

@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.blackmamba.dateplaceapp.backgroundtask.ConnexionInternet;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 
 public class ConnexionActivity extends AppCompatActivity {
@@ -82,8 +83,16 @@ public class ConnexionActivity extends AppCompatActivity {
                 }else{
                     int testemail = email.getText().toString().indexOf("@");
                     if (testemail != -1) {
+                        if(ConnexionInternet.isConnectedInternet(ConnexionActivity.this)) {
                         GetData = new GetDataAsyncTask();
                         GetData.execute();
+                        }else{
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
+                            builder.setMessage("Vous n'avez pas de connexion internet")
+                                    .setNegativeButton("Recommencer",null)
+                                    .create()
+                                    .show();
+                        }
                     }else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
                         builder.setMessage("Vous n'avez pas entrer une adresse email :)")
