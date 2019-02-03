@@ -33,10 +33,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private PermissionsManager permissionManager;
     private Button button;
 
-
     private LocationEngine locationEngine;
     private LocationLayerPlugin locationLayerPlugin;
-
     private Location originLocation;
 
 
@@ -79,7 +77,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
             initializeLocationEngine();
             initializeLocationLayer();
-
         }else {
             permissionManager = new PermissionsManager(this);
             permissionManager.requestLocationPermissions(this);
@@ -156,7 +153,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if (locationEngine != null) {
             locationEngine.removeLocationUpdates();
         }
-
         if (locationLayerPlugin != null) {
             locationLayerPlugin.onStart();
         }
@@ -172,7 +168,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if(locationLayerPlugin != null) {
             locationLayerPlugin.onStop();
         }
-
         mapView.onStop();
     }
 
@@ -209,10 +204,4 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapView.onSaveInstanceState(outState);
 
     }
-
-
-
-
-
-
 }

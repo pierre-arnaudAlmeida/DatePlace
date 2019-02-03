@@ -30,7 +30,7 @@ import java.util.List;
 
 import fr.blackmamba.dateplaceapp.backgroundtask.ConnexionInternet;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
-import fr.blackmamba.dateplaceapp.backgroundtask.ConnexionInternet;
+import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;
 
 public class InscriptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -42,8 +42,9 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
     Spinner but;
     String urlAdd = "https://dateplaceapp.000webhostapp.com/insert_user.php";
     String message,birthday;
-    int success,year,month,day;
+    int success,user_id,year,month,day;
     AddDataAsyncTask AddData;
+    DatabaseHelper users =null;
 
     /**
      * Affiche l'activité Inscription
@@ -53,7 +54,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inscription);
-
+        users = new DatabaseHelper(this);
         //Affectation de la liste déroulante
         Spinner goal = findViewById(R.id.newgoal);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.goal, android.R.layout.simple_spinner_item);
@@ -146,8 +147,12 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
                     int testemail = email.getText().toString().indexOf("@");
                     if (testemail != -1) {
                         if(ConnexionInternet.isConnectedInternet(InscriptionActivity.this)) {
+                            if (birthday==null){
+                                birthday= "1970/1/1";
+                            }
                             AddData = new AddDataAsyncTask();
                             AddData.execute();
+
                         }else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
                             builder.setMessage("Vous n'avez pas de connexion internet")
@@ -208,9 +213,9 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             Log.d("Response: ", jsonStr);
             if (jsonStr != null) {
                 try {
-
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     success = jsonObj.getInt("success");
+                    user_id = jsonObj.getInt("user_id");
                     message = jsonObj.getString("message");
                     Log.i("success", String.valueOf(success));
                     Log.i("message", message);
@@ -232,6 +237,8 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
         protected void onPostExecute(Void result){
             super.onPostExecute(result);
                if (success==1){
+                   users.addDataUser(user_id,last_name.getText().toString().toUpperCase(),name.getText().toString(),email.getText().toString(),password.getText().toString(),birthday,but.getSelectedItem().toString());
+
                    Intent gobefore = new Intent(InscriptionActivity.this, ConnexionActivity.class);
                    startActivityForResult(gobefore,100);
                    finish();
