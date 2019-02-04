@@ -27,34 +27,19 @@
             android:layout_width="311dp"
             android:layout_height="58dp"
             android:background="@android:color/transparent"
-            android:text="Recherche" />
-
-        <LinearLayout
-            android:layout_width="315dp"
-            android:layout_height="60dp"
-            android:orientation="horizontal"></LinearLayout>
+            android:text="Recherche"
+            />
 
         <TableLayout
             android:id="@+id/id_user"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"></TableLayout>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </TableLayout>
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            mapbox:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
     </com.mapbox.mapboxsdk.maps.MapView>
 
@@ -64,6 +49,8 @@
         android:layout_height="53dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="0dp"
         android:scaleType="centerInside"
         mapbox:srcCompat="@drawable/ic_user" />
 
@@ -75,6 +62,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:visibility="visible"
-        mapbox:srcCompat="@drawable/ic_menu_mylocation" />
+        mapbox:srcCompat="@drawable/ic_menu_mylocation"
+        android:background="@android:color/transparent"/>
 
 </RelativeLayout>
