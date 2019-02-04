@@ -1,5 +1,6 @@
 package fr.blackmamba.dateplaceapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineListener;
@@ -32,11 +34,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private MapboxMap map;
     private PermissionsManager permissionManager;
     private Button button;
+    private ImageView button_profil;
 
     private LocationEngine locationEngine;
     private LocationLayerPlugin locationLayerPlugin;
     private Location originLocation;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-
+        this.button_profil = findViewById(R.id.imageView);
+        button_profil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go_profil = new Intent(getApplicationContext(), UserProfilActivity.class);
+                startActivity(go_profil);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -116,7 +126,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onConnected() {
         locationEngine.requestLocationUpdates();
-
     }
 
     @Override
@@ -124,7 +133,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         if(location !=null) {
             originLocation = location;
             setCameraPosition(location);
-
         }
     }
 
@@ -202,6 +210,5 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
-
     }
 }

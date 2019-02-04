@@ -44,7 +44,6 @@ public class RunAppActivity extends AppCompatActivity {
                 /**
                  * Quand l'utilisateur clique sur le bouton connexion il est redirigé vers
                  * l'activité Connexion
-                 *
                  * @param v
                  */
                 @Override
@@ -60,7 +59,6 @@ public class RunAppActivity extends AppCompatActivity {
                 /**
                  * Quand l'utilisateur clique sur le bouton inscription il est redirigé vers
                  * l'activité Inscription
-                 *
                  * @param v
                  */
                 @Override

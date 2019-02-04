@@ -52,6 +52,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
 
     }
+    public void deleteUserCOnnected(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM "+TABLE_NAME2+";");
+    }
 
     public boolean addDataUser(int user_id,String last_name,String name,String adress_mail,String password,String birthday,String goal){
         SQLiteDatabase db = this.getWritableDatabase();
