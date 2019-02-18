@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import static android.provider.Contacts.SettingsColumns.KEY;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME = "users";
@@ -109,5 +111,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM "+TABLE_NAME2;
         Cursor data = db.rawQuery(query, null);
         return data;
+    }
+
+    public boolean updateDataUser(int user_id,String last_name,String name,String adress_mail,String password,String birthday,String goal){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues value = new ContentValues();
+
+        value.put(COL2, last_name);
+        value.put(COL3, name);
+        value.put(COL4, adress_mail);
+        value.put(COL5, password);
+        value.put(COL6, birthday);
+        value.put(COL7, goal);
+
+        long result = db.update(TABLE_NAME2, value, "user_id="+user_id , null );
+
+        if (result== -1){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

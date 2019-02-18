@@ -30,8 +30,8 @@ public class RunAppActivity extends AppCompatActivity {
             nb_connected++;
         }
         if (nb_connected==1) {
-            Intent goback = new Intent(getApplicationContext(), MapActivity.class);
-            startActivity(goback);
+            Intent gotomap = new Intent(getApplicationContext(), MapActivity.class);
+            startActivity(gotomap);
             finish();
         } else {
 

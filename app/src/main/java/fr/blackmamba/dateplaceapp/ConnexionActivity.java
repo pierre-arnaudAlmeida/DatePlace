@@ -30,10 +30,10 @@ public class ConnexionActivity extends AppCompatActivity {
     private Button button_connect;
     EditText email, password;
     String urlAdd = "https://dateplaceapp.000webhostapp.com/login.php";
-    String message,last_name,name,birthday,but;
+    String message, last_name, name, birthday, but;
     ConnexionActivity.GetDataAsyncTask GetData;
-    int success,user_id;
-    DatabaseHelper user_connected =null;
+    int success, user_id;
+    DatabaseHelper user_connected = null;
 
     /**
      * Affiche l'activité Connexion
@@ -91,16 +91,16 @@ public class ConnexionActivity extends AppCompatActivity {
                 } else {
                     int testemail = email.getText().toString().indexOf("@");
                     if (testemail != -1) {
-                            if (ConnexionInternet.isConnectedInternet(ConnexionActivity.this)) {
-                                GetData = new GetDataAsyncTask();
-                                GetData.execute();
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
-                                builder.setMessage("Vous n'avez pas de connexion internet")
-                                        .setNegativeButton("Recommencer", null)
-                                        .create()
-                                        .show();
-                            }
+                        if (ConnexionInternet.isConnectedInternet(ConnexionActivity.this)) {
+                            GetData = new GetDataAsyncTask();
+                            GetData.execute();
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
+                            builder.setMessage("Vous n'avez pas de connexion internet")
+                                    .setNegativeButton("Recommencer", null)
+                                    .create()
+                                    .show();
+                        }
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
                         builder.setMessage("Vous n'avez pas entrer une adresse email :)")
@@ -166,9 +166,31 @@ public class ConnexionActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            int nb_connected = 0;
             if (success == 1) {
-                user_connected.addDataUserConnected(user_id,last_name,name,email.getText().toString(),password.getText().toString(),birthday,but);
+                user_connected.addDataUserConnected(user_id, last_name, name, email.getText().toString(), password.getText().toString(), birthday, but);
+                Cursor data1 = user_connected.getDataUser();
+                while(data1.moveToNext()){
+                    nb_connected++;
+                }
+                if (nb_connected==0) {
+                    user_connected.addDataUser(user_id,last_name,name,email.getText().toString(),password.getText().toString(),birthday,but);
+                }else {
+                    Cursor data = user_connected.getDataUser();
+                    int x = 0;
+                    while (data.moveToNext()) {
+                        if (data.getString(1).equals(Integer.toString(user_id))) {
+                            if ((!data.getString(2).equals(last_name)) || (!data.getString(3).equals(name)) || (!data.getString(4).equals(email.getText().toString())) || (!data.getString(5).equals(password.getText().toString())) || (!data.getString(6).equals(birthday)) || (!data.getString(7).equals(but))) {
+                                user_connected.updateDataUser(user_id, last_name, name, email.getText().toString(), password.getText().toString(), birthday, but);
+                            }
+                            x++;
+                        }
+                    }
 
+                    if (x == 0) {
+                        user_connected.addDataUser(user_id, last_name, name, email.getText().toString(), password.getText().toString(), birthday, but);
+                    }
+                }
                 Intent gobefore = new Intent(ConnexionActivity.this, MapActivity.class);
                 startActivityForResult(gobefore, 100);
                 finish();

@@ -21,16 +21,18 @@
     </string-array>
     <string name="twitterUsername">\@joeyni</string>
 
-    <string name="user_search">0</string>
-    <string name="user_name">\Health Ledger</string>
+    <string name="user_birthday"></string>
+    <string name="user_name">\Health</string>
     <string name="user_place">Paris, France</string>
     <string name="email">Email</string>
     <string name="user_email">joker@gmail.com</string>
-    <string name="phone">Téléphone</string>
-    <string name="user_phone">0123456789</string>
+    <string name="password">Mot de passe</string>
+    <string name="user_password">***********</string>
     <string name="log_out">Déconnexion</string>
     <string name="search">Rechercher</string>
-    <string name="user_search_title">Recherche effectuée</string>
+    <string name="user_birthday_title">Date de naissance</string>
+    <string name="user_goal_title">But</string>
+    <string name="user_goal"></string>
 
 
     <string name="access_token">pk.eyJ1IjoiZGVzbGF5IiwiYSI6ImNqcTQxdXM4dTFrYW00OG11ZHJieHR1YjQifQ.x0wMIY5il7ubistZeYVcEw</string>

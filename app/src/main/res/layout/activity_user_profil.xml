@@ -28,13 +28,12 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle"
                 android:padding="3dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/joker" />
+                android:scaleType="centerInside" />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
@@ -45,12 +44,11 @@
             android:textColor="@color/white"
             android:textSize="32sp" />
 
-
         <TextView
-            android:id="@+id/tv_address"
+            android:id="@+id/user_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
+            android:layout_below="@+id/user_name"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:text="@string/user_place"
@@ -58,7 +56,7 @@
             android:textColor="@color/address"
             android:textSize="14sp" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/button_parametre"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -66,9 +64,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:adjustViewBounds="true"
-            android:onClick="@image_parameter"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_settings" />
+            android:src="@drawable/ic_settings" />
 
     </RelativeLayout>
 
@@ -167,10 +164,10 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/user_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="@string/user_email"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -191,15 +188,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/phone"
+                    android:text="@string/password"
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/user_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="@string/user_phone"
+                    android:text="@string/user_password"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     tools:ignore="HardcodedText" />
@@ -221,15 +219,46 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/user_search_title"
+                    android:text="@string/user_birthday_title"
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/user_birthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="@string/user_search"
+                    android:text="@string/user_birthday"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_goal_title"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/user_goal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/user_goal"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
