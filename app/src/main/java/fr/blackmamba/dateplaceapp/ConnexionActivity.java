@@ -30,7 +30,7 @@ public class ConnexionActivity extends AppCompatActivity {
     private Button button_connect;
     EditText email, password;
     String urlAdd = "https://dateplaceapp.000webhostapp.com/login.php";
-    String message, last_name, name, birthday, but;
+    String message, last_name, name, birthday, but,password_user;
     ConnexionActivity.GetDataAsyncTask GetData;
     int success, user_id;
     DatabaseHelper user_connected = null;
@@ -140,6 +140,7 @@ public class ConnexionActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     success = jsonObj.getInt("success");
+                    password_user = jsonObj.getString("password");
                     user_id = jsonObj.getInt("user_id");
                     last_name = jsonObj.getString("last_name");
                     name = jsonObj.getString("name");
@@ -166,29 +167,33 @@ public class ConnexionActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            int nb_connected = 0;
+            int nb_added = 0;
             if (success == 1) {
-                user_connected.addDataUserConnected(user_id, last_name, name, email.getText().toString(), password.getText().toString(), birthday, but);
+                //Ajout dans la BDD User Connected si la personne possède le bon identifiant et mot de passe
+                user_connected.addDataUserConnected(user_id, last_name, name, email.getText().toString(), password_user, birthday, but);
+
                 Cursor data1 = user_connected.getDataUser();
                 while(data1.moveToNext()){
-                    nb_connected++;
+                    nb_added++;
                 }
-                if (nb_connected==0) {
-                    user_connected.addDataUser(user_id,last_name,name,email.getText().toString(),password.getText().toString(),birthday,but);
+                //Si personne n'as été ajouté au préalable dans la BDD
+                if (nb_added==0) {
+                    user_connected.addDataUser(user_id,last_name,name,email.getText().toString(),password_user,birthday,but);
                 }else {
+                    //on verifie que les infos de la base en ligne sont identique a la base en local et on les modifie si necessaire
                     Cursor data = user_connected.getDataUser();
                     int x = 0;
                     while (data.moveToNext()) {
                         if (data.getString(1).equals(Integer.toString(user_id))) {
-                            if ((!data.getString(2).equals(last_name)) || (!data.getString(3).equals(name)) || (!data.getString(4).equals(email.getText().toString())) || (!data.getString(5).equals(password.getText().toString())) || (!data.getString(6).equals(birthday)) || (!data.getString(7).equals(but))) {
+                            if ((!data.getString(2).equals(last_name)) || (!data.getString(3).equals(name)) || (!data.getString(4).equals(email.getText().toString())) || (!data.getString(5).equals(password_user)) || (!data.getString(6).equals(birthday)) || (!data.getString(7).equals(but))) {
                                 user_connected.updateDataUser(user_id, last_name, name, email.getText().toString(), password.getText().toString(), birthday, but);
                             }
                             x++;
                         }
                     }
-
+                    //Si la table User n'est pas vide et que la personne n'existe pas dasn celle-ci
                     if (x == 0) {
-                        user_connected.addDataUser(user_id, last_name, name, email.getText().toString(), password.getText().toString(), birthday, but);
+                        user_connected.addDataUser(user_id, last_name, name, email.getText().toString(), password_user, birthday, but);
                     }
                 }
                 Intent gobefore = new Intent(ConnexionActivity.this, MapActivity.class);
@@ -197,14 +202,7 @@ public class ConnexionActivity extends AppCompatActivity {
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
                 builder.setMessage("La Connection à échoué");
-                builder.setNegativeButton("Recommencer", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent goback = new Intent(ConnexionActivity.this, ConnexionActivity.class);
-                        startActivityForResult(goback, 100);
-                        finish();
-                    }
-                });
+                builder.setNegativeButton("Recommencer", null);
                 builder.show();
             }
         }

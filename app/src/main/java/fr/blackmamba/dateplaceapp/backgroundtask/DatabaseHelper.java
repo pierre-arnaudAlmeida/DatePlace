@@ -124,6 +124,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         value.put(COL6, birthday);
         value.put(COL7, goal);
 
+        long result = db.update(TABLE_NAME, value, "user_id="+user_id , null );
+
+        if (result== -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean updateDataUserConnected(int user_id,String last_name,String name,String adress_mail,String password,String birthday,String goal){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues value = new ContentValues();
+
+        value.put(COL2, last_name);
+        value.put(COL3, name);
+        value.put(COL4, adress_mail);
+        value.put(COL5, password);
+        value.put(COL6, birthday);
+        value.put(COL7, goal);
+
         long result = db.update(TABLE_NAME2, value, "user_id="+user_id , null );
 
         if (result== -1){

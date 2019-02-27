@@ -41,7 +41,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
     Button date_de_naissance;
     Spinner but;
     String urlAdd = "https://dateplaceapp.000webhostapp.com/insert_user.php";
-    String message,birthday;
+    String message,birthday,password_user;
     int success,user_id,year,month,day;
     AddDataAsyncTask AddData;
     DatabaseHelper users =null;
@@ -216,6 +216,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     success = jsonObj.getInt("success");
                     user_id = jsonObj.getInt("user_id");
+                    password_user = jsonObj.getString("password");
                     message = jsonObj.getString("message");
                     Log.i("success", String.valueOf(success));
                     Log.i("message", message);
@@ -237,7 +238,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
         protected void onPostExecute(Void result){
             super.onPostExecute(result);
                if (success==1){
-                   users.addDataUser(user_id,last_name.getText().toString().toUpperCase(),name.getText().toString(),email.getText().toString(),password.getText().toString(),birthday,but.getSelectedItem().toString());
+                   users.addDataUser(user_id,last_name.getText().toString().toUpperCase(),name.getText().toString(),email.getText().toString(),password_user,birthday,but.getSelectedItem().toString());
 
                    Intent gobefore = new Intent(InscriptionActivity.this, ConnexionActivity.class);
                    startActivityForResult(gobefore,100);
@@ -245,14 +246,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
                }else {
                    AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
                    builder.setMessage("L'inscription à échoué");
-                   builder.setNegativeButton("Recommencer", new DialogInterface.OnClickListener() {
-                       @Override
-                       public void onClick(DialogInterface dialog, int which) {
-                            Intent goback = new Intent(InscriptionActivity.this, InscriptionActivity.class);
-                            startActivityForResult(goback,100);
-                            finish();
-                       }
-                   });
+                   builder.setNegativeButton("Recommencer", null);
                    builder.show();
                }
         }

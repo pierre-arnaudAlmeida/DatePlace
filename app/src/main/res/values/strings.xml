@@ -7,7 +7,7 @@
     <string name="button_goback_text">Retour</string>
     <string name="button_connect_text">GOOO</string>
     <string name="button_inscrip_text">Je m\'inscris</string>
-    <string name="title_pseudo_text">Pseudo</string>
+    <string name="title_pseudo_text">Prénom</string>
     <string name="title_nom_text">Nom</string>
     <string name="title_adressemail_text">Adresse email</string>
     <string name="title_password_text">Mot de Passe</string>
