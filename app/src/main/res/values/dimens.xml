@@ -78,4 +78,10 @@
     <dimen name="button_inscrip_marginStart">15dp</dimen>
     <dimen name="button_inscrip_marginEnd">80dp</dimen>
     <dimen name="button_inscrip_marginBottom">40dp</dimen>
+
+    <dimen name ="button_go_inscription_width">50dp</dimen>
+    <dimen name ="button_go_inscription_height">45dp</dimen>
+    <dimen name ="button_go_inscription_marginStart">50dp</dimen>
+    <dimen name ="button_go_inscription_marginEnd">25dp</dimen>
+    <dimen name ="button_go_inscription_marginBottom">145dp</dimen>
 </resources>

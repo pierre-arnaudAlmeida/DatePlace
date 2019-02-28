@@ -35,6 +35,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private PermissionsManager permissionManager;
     private Button button;
     private ImageView button_profil;
+    private ImageView button_research;
 
     private LocationEngine locationEngine;
     private LocationLayerPlugin locationLayerPlugin;
@@ -51,20 +52,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 map = mapboxMap);
 
         mapView.getMapAsync(this);
-        this.button = findViewById(R.id.button);
+        /**this.button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             /**
              * Si l'utilisateur clique sur le bouton retour, il sera redirigé vers l'activité
              * SearchActivity
              * @param v
-             */
+
             @Override
             public void onClick(View v) {
                 Intent button = new Intent(getApplicationContext(), SearchActivity.class);
                 startActivity(button);
                 finish();
             }
-        });
+        });*/
 
         this.button_profil = findViewById(R.id.imageView);
         button_profil.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +73,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 Intent go_profil = new Intent(getApplicationContext(), UserProfilActivity.class);
                 startActivity(go_profil);
+                finish();
+            }
+        });
+
+        this.button_research = findViewById(R.id.button_research);
+        button_research.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent research = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(research);
                 finish();
             }
         });

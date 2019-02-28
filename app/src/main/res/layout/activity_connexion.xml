@@ -92,4 +92,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_goback"/>
+
+
+    <!-- Bouton d'inscription-->
+    <ImageView
+        android:id="@+id/button_go_inscription"
+        android:layout_width="@dimen/button_go_inscription_width"
+        android:layout_height="@dimen/button_go_inscription_height"
+        android:layout_marginEnd="@dimen/button_go_inscription_marginEnd"
+        android:layout_marginBottom="@dimen/button_go_inscription_marginBottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/moreinfo_arrow" />
+
+
 </android.support.constraint.ConstraintLayout>

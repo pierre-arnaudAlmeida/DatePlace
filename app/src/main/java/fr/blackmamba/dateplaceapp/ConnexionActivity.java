@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -28,6 +29,7 @@ public class ConnexionActivity extends AppCompatActivity {
 
     private Button button_goback;
     private Button button_connect;
+    private ImageView button_go_inscription;
     EditText email, password;
     String urlAdd = "https://dateplaceapp.000webhostapp.com/login.php";
     String message, last_name, name, birthday, but,password_user;
@@ -111,6 +113,18 @@ public class ConnexionActivity extends AppCompatActivity {
                 }
             }
         });
+
+        this.button_go_inscription = findViewById(R.id.button_go_inscription);
+        button_go_inscription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inscription = new Intent(getApplicationContext(), InscriptionActivity.class);
+                startActivity(inscription);
+                finish();
+            }
+        });
+
+
     }
 
     public class GetDataAsyncTask extends AsyncTask<Void, Void, Void> {
