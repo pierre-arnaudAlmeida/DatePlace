@@ -21,6 +21,7 @@ public class UserProfilActivity extends AppCompatActivity {
 
     private TextView button_deconnexion;
     private ImageView button_parameter;
+    private ImageView button_map;
     DatabaseHelper user_connected;
     private TextView user_name;
     private TextView user_email;
@@ -69,6 +70,16 @@ public class UserProfilActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent parameter = new Intent(getApplicationContext(), UserSettingActivity.class);
                 startActivity(parameter);
+                finish();
+            }
+        });
+
+        this.button_map = findViewById(R.id.button_map);
+        button_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go_map = new Intent(getApplicationContext(), MapActivity.class);
+                startActivity(go_map);
                 finish();
             }
         });

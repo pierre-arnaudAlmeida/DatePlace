@@ -38,15 +38,15 @@
             android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/button_back"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="321dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_setting"
-            android:onClick="@image_setting1"/>
+            app:srcCompat="@drawable/retour" />
 
     </RelativeLayout>
 
