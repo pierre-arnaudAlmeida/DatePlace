@@ -53,6 +53,7 @@ public class UserProfilActivity extends AppCompatActivity {
                 user_but.setText(data_user_connected.getString(6));
             }
         }
+        data_user_connected.close();
 
         this.button_deconnexion = findViewById(R.id.button_deconnexion);
         button_deconnexion.setOnClickListener(new View.OnClickListener() {

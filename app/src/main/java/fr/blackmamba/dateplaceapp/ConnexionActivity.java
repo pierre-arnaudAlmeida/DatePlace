@@ -176,6 +176,7 @@ public class ConnexionActivity extends AppCompatActivity {
                 while(data1.moveToNext()){
                     nb_added++;
                 }
+                data1.close();
                 //Si personne n'as été ajouté au préalable dans la BDD
                 if (nb_added==0) {
                     user_connected.addDataUser(user_id,last_name,name,email.getText().toString(),password_user,birthday,but);
@@ -191,6 +192,7 @@ public class ConnexionActivity extends AppCompatActivity {
                             x++;
                         }
                     }
+                    data.close();
                     //Si la table User n'est pas vide et que la personne n'existe pas dasn celle-ci
                     if (x == 0) {
                         user_connected.addDataUser(user_id, last_name, name, email.getText().toString(), password_user, birthday, but);

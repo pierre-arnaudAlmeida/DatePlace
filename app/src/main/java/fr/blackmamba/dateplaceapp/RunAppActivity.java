@@ -53,6 +53,7 @@ public class RunAppActivity extends AppCompatActivity {
                 GetData.execute();
             }
         }
+        data.close();
 
         if (nb_connected == 1) {
             Intent gotomap = new Intent(getApplicationContext(), MapActivity.class);
@@ -161,6 +162,7 @@ public class RunAppActivity extends AppCompatActivity {
                         user_connected.updateDataUserConnected(user_id, last_name, name, email, password, birthday, but);
                     }
                 }
+                data.close();
             }
         }
     }
