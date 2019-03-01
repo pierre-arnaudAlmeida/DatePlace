@@ -1,10 +1,8 @@
 package fr.blackmamba.dateplaceapp;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +11,6 @@ import android.widget.Button;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,7 +24,7 @@ public class RunAppActivity extends AppCompatActivity {
     private Button button_connexion;
     private Button button_inscription;
     String urlAdd = "https://dateplaceapp.000webhostapp.com/update_db.php";
-    DatabaseHelper user_connected;
+    DatabaseHelper count_connected;
     int nb_connected = 0;
     int user_id, success;
     String last_name, name, birthday, but, password,email;
@@ -43,22 +40,22 @@ public class RunAppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_run_app);
 
-        user_connected = new DatabaseHelper(this);
-        Cursor data = user_connected.getDataUserConnected();
-        while (data.moveToNext()) {
+        count_connected = new DatabaseHelper(this);
+        Cursor count_connectedDataUserConnected = count_connected.getDataUserConnected();
+        while (count_connectedDataUserConnected.moveToNext()) {
             nb_connected++;
             if(nb_connected==1){
-                user_id = Integer.parseInt(data.getString(0));
+                user_id = Integer.parseInt(count_connectedDataUserConnected.getString(0));
                 GetData = new GetDataAsyncTask();
                 GetData.execute();
             }
         }
-        data.close();
+        count_connectedDataUserConnected.close();
 
         if (nb_connected == 1) {
             Intent gotomap = new Intent(getApplicationContext(), MapActivity.class);
             startActivity(gotomap);
-            finish();
+            this.finish();
         } else {
 
             //Affectation des boutons a des variables
@@ -126,6 +123,7 @@ public class RunAppActivity extends AppCompatActivity {
                     user_id = jsonObj.getInt("user_id");
                     last_name = jsonObj.getString("last_name");
                     name = jsonObj.getString("name");
+                    email = jsonObj.getString("adress_mail");
                     birthday = jsonObj.getString("birthday");
                     but = jsonObj.getString("goal");
                     password = jsonObj.getString("password");
@@ -149,17 +147,17 @@ public class RunAppActivity extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             if (success == 1) {
-                Cursor data = user_connected.getDataUserConnected();
+                Cursor data = count_connected.getDataUserConnected();
                 while(data.moveToNext()){
                     if(data.getString(0).equals(Integer.toString(user_id)) && (!data.getString(4).equals(password))){
-                        user_connected.updateDataUser(user_id, last_name, name, email, password, birthday, but);
-                        user_connected.updateDataUserConnected(user_id, last_name, name, email, password, birthday, but);
+                        count_connected.updateDataUser(user_id, last_name, name, email, password, birthday, but);
+                        count_connected.updateDataUserConnected(user_id, last_name, name, email, password, birthday, but);
                         Intent gobefore = new Intent(RunAppActivity.this, ConnexionActivity.class);
                         startActivityForResult(gobefore, 100);
                         finish();
                     } else {
-                        user_connected.updateDataUser(user_id, last_name, name, email, password, birthday, but);
-                        user_connected.updateDataUserConnected(user_id, last_name, name, email, password, birthday, but);
+                        count_connected.updateDataUser(user_id, last_name, name, email, password, birthday, but);
+                        count_connected.updateDataUserConnected(user_id, last_name, name, email, password, birthday, but);
                     }
                 }
                 data.close();

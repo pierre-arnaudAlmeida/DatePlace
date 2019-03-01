@@ -25,7 +25,7 @@
     <string name="user_name">\Health</string>
     <string name="user_place">Paris, France</string>
     <string name="email">Email</string>
-    <string name="user_email">joker@gmail.com</string>
+    <string name="user_email">************@******</string>
     <string name="password">Mot de passe</string>
     <string name="user_password">***********</string>
     <string name="log_out">Déconnexion</string>

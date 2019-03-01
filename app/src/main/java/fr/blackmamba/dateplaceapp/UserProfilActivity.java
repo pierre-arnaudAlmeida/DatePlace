@@ -54,6 +54,7 @@ public class UserProfilActivity extends AppCompatActivity {
             }
         }
         data_user_connected.close();
+        user_connected.close();
 
         this.button_deconnexion = findViewById(R.id.button_deconnexion);
         button_deconnexion.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +101,6 @@ public class UserProfilActivity extends AppCompatActivity {
                 layout.addView(editText_name);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-
                 builder.setMessage("Modifiez vos informations ");
                 builder.setView(layout);
 
@@ -126,5 +126,23 @@ public class UserProfilActivity extends AppCompatActivity {
                 builder.show();
             }
         });
+
+        user_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+                builder.setMessage("Voulez-vous modifer le mot de passe ?")
+                        .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //faire la maj mot de passe
+                            }
+                        })
+                        .setNegativeButton("Non", null)
+                        .create()
+                        .show();
+            }
+        });
+
     }
 }

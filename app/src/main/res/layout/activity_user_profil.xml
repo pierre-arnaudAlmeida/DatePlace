@@ -182,6 +182,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:textColor="#000000"
+                    android:text="@string/user_email"
                     android:textSize="18sp" />
 
                 <View
