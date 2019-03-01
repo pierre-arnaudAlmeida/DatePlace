@@ -1,6 +1,5 @@
 package fr.blackmamba.dateplaceapp;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -27,15 +26,15 @@ import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 
 public class ConnexionActivity extends AppCompatActivity {
 
-    private Button button_goback;
-    private Button button_connect;
-    private ImageView button_go_inscription;
     EditText email, password;
     String urlAdd = "https://dateplaceapp.000webhostapp.com/login.php";
-    String message, last_name, name, birthday, but,password_user;
+    String message, last_name, name, birthday, but, password_user;
     ConnexionActivity.GetDataAsyncTask GetData;
     int success, user_id;
     DatabaseHelper user_connected = null;
+    private Button button_goback;
+    private Button button_connect;
+    private ImageView button_go_inscription;
 
     /**
      * Affiche l'activité Connexion
@@ -187,14 +186,14 @@ public class ConnexionActivity extends AppCompatActivity {
                 user_connected.addDataUserConnected(user_id, last_name, name, email.getText().toString(), password_user, birthday, but);
 
                 Cursor data1 = user_connected.getDataUser();
-                while(data1.moveToNext()){
+                while (data1.moveToNext()) {
                     nb_added++;
                 }
                 data1.close();
                 //Si personne n'as été ajouté au préalable dans la BDD
-                if (nb_added==0) {
-                    user_connected.addDataUser(user_id,last_name,name,email.getText().toString(),password_user,birthday,but);
-                }else {
+                if (nb_added == 0) {
+                    user_connected.addDataUser(user_id, last_name, name, email.getText().toString(), password_user, birthday, but);
+                } else {
                     //on verifie que les infos de la base en ligne sont identique a la base en local et on les modifie si necessaire
                     Cursor data = user_connected.getDataUser();
                     int x = 0;

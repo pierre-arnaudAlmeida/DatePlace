@@ -1,36 +1,39 @@
 package fr.blackmamba.dateplaceapp;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Calendar;
 
 import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;
 
 public class UserProfilActivity extends AppCompatActivity {
 
+    DatabaseHelper user_connected;
     private TextView button_deconnexion;
     private ImageView button_parameter;
     private ImageView button_map;
-    DatabaseHelper user_connected;
     private TextView user_name;
     private TextView user_email;
     private TextView user_password;
     private TextView user_birthday;
     private TextView user_but;
-
-    private String new_name;
-    private String new_lastname;
+    private int year, month, day;
+    private DatePickerDialog.OnDateSetListener user_birthday_Listener;
+    private String new_name, new_lastname, actual_password, new_password, new_email, new_birthday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +63,21 @@ public class UserProfilActivity extends AppCompatActivity {
         button_deconnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user_connected.deleteUserCOnnected();
-                Intent deconnexion = new Intent(getApplicationContext(), RunAppActivity.class);
-                startActivity(deconnexion);
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+                builder.setMessage("Voulez-vous vraiment vous deconnecter ?");
+
+                builder.setNegativeButton("Non", null);
+                builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        user_connected.deleteUserCOnnected();
+                        Intent deconnexion = new Intent(getApplicationContext(), RunAppActivity.class);
+                        startActivity(deconnexion);
+                        finish();
+                    }
+                })
+                        .create()
+                        .show();
             }
         });
         this.button_parameter = findViewById(R.id.button_parametre);
@@ -104,23 +118,15 @@ public class UserProfilActivity extends AppCompatActivity {
                 builder.setMessage("Modifiez vos informations ");
                 builder.setView(layout);
 
-                builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent goback = new Intent(UserProfilActivity.this, UserProfilActivity.class);
-                        startActivityForResult(goback,100);
-                        finish();
-                    }
-                });
+                builder.setNegativeButton("Annuler", null);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         new_name = editText_name.getText().toString();
                         new_lastname = editText_lastname.getText().toString();
 
-                        Intent goafter = new Intent(UserProfilActivity.this, UserProfilActivity.class);
-                        startActivityForResult(goafter,100);
-                        finish();
+                        // TODO qui modifie juste sur la page pas dans la base
+                        user_name.setText(new_lastname.toUpperCase() + " " + new_name);
                     }
                 });
                 builder.show();
@@ -130,19 +136,116 @@ public class UserProfilActivity extends AppCompatActivity {
         user_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LinearLayout layout = new LinearLayout(UserProfilActivity.this);
+                layout.setOrientation(LinearLayout.VERTICAL);
+
+                EditText editText_actual_password = new EditText(UserProfilActivity.this);
+                editText_actual_password.setHint("Ancien mot de passe");
+                layout.addView(editText_actual_password);
+
+                EditText editText_new_password = new EditText(UserProfilActivity.this);
+                editText_new_password.setHint("Nouveau mot de passe");
+                layout.addView(editText_new_password);
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-                builder.setMessage("Voulez-vous modifer le mot de passe ?")
-                        .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //faire la maj mot de passe
-                            }
-                        })
-                        .setNegativeButton("Non", null)
+                builder.setMessage("Modification du mot de passe ");
+                builder.setView(layout);
+
+                builder.setNegativeButton("Annuler", null);
+                builder.setPositiveButton("Modifier", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        actual_password = editText_actual_password.getText().toString();
+                        new_password = editText_new_password.getText().toString();
+                        // TODO faire la maj mot de passe
+                        user_password.setText(new_password);
+                    }
+                })
                         .create()
                         .show();
             }
         });
 
+        user_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText editText_new_email = new EditText(UserProfilActivity.this);
+                editText_new_email.setHint("Nouvelle adresse mail ");
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+                builder.setMessage("Modification de l'adresse mail ");
+                builder.setView(editText_new_email);
+
+                builder.setNegativeButton("Annuler", null);
+                builder.setPositiveButton("Modifier", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        new_email = editText_new_email.getText().toString();
+                        // TODO faire la maj mot de passe
+                        user_email.setText(new_email);
+                    }
+                })
+                        .create()
+                        .show();
+            }
+        });
+
+        user_birthday.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Quand l'utilisateur clique sur le bouton Calendrier il y a une popup qui s'ouvre lui permettant
+             * de choisir une date de naissance.
+             * @param v
+             */
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datedialog = new DatePickerDialog(
+                        UserProfilActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        user_birthday_Listener,
+                        year, month, day);
+                datedialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datedialog.show();
+            }
+        });
+        user_birthday_Listener = new DatePickerDialog.OnDateSetListener() {
+            /**
+             * Recuperation des valeurs saisie par l'utilisateur dans le calendrier
+             * pour ensuite les stockés dans un string
+             * @param datePicker
+             * @param year  année
+             * @param month mois
+             * @param day   jour
+             */
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                new_birthday = "" + year + "/" + month + "/" + day;
+                // TODO fait la maj sur la date
+                user_birthday.setText(new_birthday);
+            }
+        };
+
+        user_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+                builder.setMessage("Modification du but ");
+
+                builder.setNegativeButton("Annuler", null);
+                builder.setPositiveButton("Modifier", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //TODO faire une liste a cocher pour les trois cas possible et permettre d'en choisir q'un
+                    }
+                })
+                        .create()
+                        .show();
+            }
+        });
     }
 }

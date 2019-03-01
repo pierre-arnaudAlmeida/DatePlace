@@ -1,6 +1,5 @@
 package fr.blackmamba.dateplaceapp;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -8,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.mapbox.android.core.location.LocationEngine;
@@ -25,8 +25,6 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.plugins.locationlayer.LocationLayerPlugin;
 import com.mapbox.mapboxsdk.plugins.locationlayer.modes.CameraMode;
 import com.mapbox.mapboxsdk.plugins.locationlayer.modes.RenderMode;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, LocationEngineListener, PermissionsListener {
@@ -36,6 +34,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Button button;
     private ImageView button_profil;
     private ImageView button_research;
+    private ImageButton localisation_button;
 
     private LocationEngine locationEngine;
     private LocationLayerPlugin locationLayerPlugin;
@@ -66,6 +65,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 finish();
             }
         });*/
+
+        // TODO faire la localisation quand on clique sur ce bouton
+        //la ca renvoie vers la page d'un lieux
+        this.localisation_button = findViewById(R.id.image_button);
+        localisation_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent go_place = new Intent(getApplicationContext(), PlaceActivity.class);
+                startActivity(go_place);
+                finish();
+            }
+        });
 
         this.button_profil = findViewById(R.id.imageView);
         button_profil.setOnClickListener(new View.OnClickListener() {
