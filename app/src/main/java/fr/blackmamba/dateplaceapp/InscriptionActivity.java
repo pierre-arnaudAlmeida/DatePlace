@@ -210,7 +210,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             nameValuePair.add(new BasicNameValuePair("name", name.getText().toString()));
             nameValuePair.add(new BasicNameValuePair("last_name", last_name.getText().toString().toUpperCase()));
             nameValuePair.add(new BasicNameValuePair("password", password.getText().toString()));
-            nameValuePair.add(new BasicNameValuePair("email", email.getText().toString()));
+            nameValuePair.add(new BasicNameValuePair("email", email.getText().toString().toLowerCase()));
             nameValuePair.add(new BasicNameValuePair("date_de_naissance", birthday));
             nameValuePair.add(new BasicNameValuePair("goal", but.getSelectedItem().toString()));
 

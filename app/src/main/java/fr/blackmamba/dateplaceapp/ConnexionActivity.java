@@ -143,7 +143,7 @@ public class ConnexionActivity extends AppCompatActivity {
 
             List<NameValuePair> nameValuePair = new ArrayList<>(1);
 
-            nameValuePair.add(new BasicNameValuePair("email", email.getText().toString()));
+            nameValuePair.add(new BasicNameValuePair("email", email.getText().toString().toLowerCase()));
             nameValuePair.add(new BasicNameValuePair("password", password.getText().toString()));
 
             String jsonStr = sh.makeServiceCall(urlConnect, ServiceHandler.POST, nameValuePair);

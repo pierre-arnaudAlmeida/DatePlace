@@ -159,12 +159,6 @@ public class RunAppActivity extends AppCompatActivity {
                     if(data.getString(0).equals(Integer.toString(user_id)) && (!data.getString(4).equals(password))){
                         count_connected.updateDataUser(user_id, last_name, name, email, password, birthday, but);
                         count_connected.updateDataUserConnected(user_id, last_name, name, email, password, birthday, but);
-                        Intent gobefore = new Intent(RunAppActivity.this, ConnexionActivity.class);
-                        startActivityForResult(gobefore, 100);
-                        finish();
-                    } else {
-                        count_connected.updateDataUser(user_id, last_name, name, email, password, birthday, but);
-                        count_connected.updateDataUserConnected(user_id, last_name, name, email, password, birthday, but);
                     }
                 }
                 data.close();

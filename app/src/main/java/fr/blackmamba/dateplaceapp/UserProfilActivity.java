@@ -53,6 +53,7 @@ public class UserProfilActivity extends AppCompatActivity {
     private String new_password;
     private String new_email;
     private String new_birthday;
+    private String new_birthday2;
     private String action;
     private DatePickerDialog.OnDateSetListener user_birthday_Listener;
     private String urlUpdate = "https://dateplaceapp.000webhostapp.com/update_datas.php";
@@ -192,8 +193,16 @@ public class UserProfilActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         actual_password = editText_actual_password.getText().toString();
                         new_password = editText_new_password.getText().toString();
-                        // TODO faire la maj mot de passe
-                        user_password.setText(new_password);
+                        if((!actual_password.equals("")) && (!new_password.equals(""))){
+                            action = "update_password";
+                            UpdateData = new UpdateDataAsyncTask();
+                            UpdateData.execute();
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+                            builder.setMessage("Les champs ne sont pas tous renseigné");
+                            builder.setPositiveButton("J'ai compris", null);
+                            builder.show();
+                        }
                     }
                 })
                         .create()
@@ -216,8 +225,9 @@ public class UserProfilActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         new_email = editText_new_email.getText().toString();
-                        // TODO faire la maj mot de passe
-                        user_email.setText(new_email);
+                        action = "update_adressmail";
+                        UpdateData = new UpdateDataAsyncTask();
+                        UpdateData.execute();
                     }
                 })
                         .create()
@@ -261,8 +271,11 @@ public class UserProfilActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 new_birthday = "" + year + "/" + month + "/" + day;
-                // TODO fait la maj sur la date
-                user_birthday.setText(new_birthday);
+                new_birthday2 = "" + year + "-" + month + "-" + day;
+                action = "update_birthday";
+                UpdateData = new UpdateDataAsyncTask();
+                UpdateData.execute();
+                //TODO corrigé le bug du format de la date ici rajouter des 0 devant les chiffres
             }
         };
 
@@ -305,8 +318,17 @@ public class UserProfilActivity extends AppCompatActivity {
 
             nameValuePair.add(new BasicNameValuePair("action", action));
             nameValuePair.add(new BasicNameValuePair("user_id", user_id));
-            nameValuePair.add(new BasicNameValuePair("new_name", new_name));
-            nameValuePair.add(new BasicNameValuePair("new_lastname", new_lastname.toUpperCase()));
+            if (action.equals("update_name")){
+                nameValuePair.add(new BasicNameValuePair("new_name", new_name));
+                nameValuePair.add(new BasicNameValuePair("new_lastname", new_lastname.toUpperCase()));
+            } else if (action.equals("update_birthday")){
+                nameValuePair.add(new BasicNameValuePair("new_birthday", new_birthday));
+            } else if (action.equals("update_adressmail")){
+                nameValuePair.add(new BasicNameValuePair("new_adressmail", new_email.toLowerCase()));
+            } else if (action.equals("update_password")){
+                nameValuePair.add(new BasicNameValuePair("actual_password", actual_password));
+                nameValuePair.add(new BasicNameValuePair("new_password", new_password));
+            }
 
             String jsonStr = sh.makeServiceCall(urlUpdate, ServiceHandler.POST, nameValuePair);
 
@@ -333,7 +355,6 @@ public class UserProfilActivity extends AppCompatActivity {
                 builder.show();
             } else {
                 if (action.equals("update_name")){
-                    //TODO actualisation de la bd local
                     if (new_lastname.equals("")){
                         new_lastname = user_lastname;
                     } else if (new_name.equals("")){
@@ -342,6 +363,17 @@ public class UserProfilActivity extends AppCompatActivity {
                     user_connected.updateDataUserConnected(Integer.parseInt(user_id),new_lastname.toUpperCase(),new_name,user_email.getText().toString(),user_password.getText().toString(),user_birthday.getText().toString(),user_but.getText().toString());
                     user_connected.updateDataUser(Integer.parseInt(user_id),new_lastname.toUpperCase(),new_name,user_email.getText().toString(),user_password.getText().toString(),user_birthday.getText().toString(),user_but.getText().toString());
                     user_name.setText(new_lastname.toUpperCase() + " " + new_name);
+                } else if (action.equals("update_birthday")){
+                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),user_lastname,user_firstname,user_email.getText().toString(),user_password.getText().toString(),new_birthday2,user_but.getText().toString());
+                    user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname,user_email.getText().toString(),user_password.getText().toString(),new_birthday2,user_but.getText().toString());
+                    user_birthday.setText(new_birthday2);
+                } else if (action.equals("update_adressmail")){
+                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),user_lastname,user_firstname,new_email.toLowerCase(),user_password.getText().toString(),user_birthday.getText().toString(),user_but.getText().toString());
+                    user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname,new_email.toLowerCase(),user_password.getText().toString(),user_birthday.getText().toString(),user_but.getText().toString());
+                    user_email.setText(new_email.toLowerCase());
+                } else if (action.equals("update_password")){
+                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),user_lastname,user_firstname,user_email.getText().toString(),new_password,new_birthday2,user_but.getText().toString());
+                    user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname,user_email.getText().toString(),new_password,new_birthday2,user_but.getText().toString());
                 }
             }
         }
