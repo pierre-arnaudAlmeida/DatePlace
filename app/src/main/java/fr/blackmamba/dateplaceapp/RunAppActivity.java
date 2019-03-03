@@ -21,14 +21,21 @@ import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 
 public class RunAppActivity extends AppCompatActivity {
+
     private Button button_connexion;
     private Button button_inscription;
-    String urlAdd = "https://dateplaceapp.000webhostapp.com/update_db.php";
-    DatabaseHelper count_connected;
-    int nb_connected = 0;
-    int user_id, success;
-    String last_name, name, birthday, but, password,email;
+    private String urlGet = "https://dateplaceapp.000webhostapp.com/update_db.php";
+    private int nb_connected = 0;
+    private int user_id;
+    private int success;
+    private String last_name;
+    private String name;
+    private String birthday;
+    private String but;
+    private String password;
+    private String email;
     GetDataAsyncTask GetData;
+    DatabaseHelper count_connected;
 
     /**
      * Affiche l'activité RunApp
@@ -113,7 +120,7 @@ public class RunAppActivity extends AppCompatActivity {
 
             nameValuePair.add(new BasicNameValuePair("user_id", String.valueOf(user_id)));
 
-            String jsonStr = sh.makeServiceCall(urlAdd, ServiceHandler.POST, nameValuePair);
+            String jsonStr = sh.makeServiceCall(urlGet, ServiceHandler.POST, nameValuePair);
             Log.d("Response: ", jsonStr);
 
             if (jsonStr != null) {

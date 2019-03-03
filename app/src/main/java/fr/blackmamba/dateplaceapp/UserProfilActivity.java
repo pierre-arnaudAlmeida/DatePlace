@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -16,24 +18,46 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;
+import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 
 public class UserProfilActivity extends AppCompatActivity {
 
-    DatabaseHelper user_connected;
-    private TextView button_deconnexion;
     private ImageView button_parameter;
     private ImageView button_map;
+    private TextView button_deconnexion;
     private TextView user_name;
     private TextView user_email;
     private TextView user_password;
     private TextView user_birthday;
     private TextView user_but;
-    private int year, month, day;
+    private int year;
+    private int month;
+    private int day;
+    private int success;
+    private String user_id;
+    private String user_lastname;
+    private String user_firstname;
+    private String new_name;
+    private String new_lastname;
+    private String actual_password;
+    private String new_password;
+    private String new_email;
+    private String new_birthday;
+    private String action;
     private DatePickerDialog.OnDateSetListener user_birthday_Listener;
-    private String new_name, new_lastname, actual_password, new_password, new_email, new_birthday;
+    private String urlUpdate = "https://dateplaceapp.000webhostapp.com/update_datas.php";
+    UpdateDataAsyncTask UpdateData;
+    DatabaseHelper user_connected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +74,10 @@ public class UserProfilActivity extends AppCompatActivity {
         Cursor data_user_connected = user_connected.getDataUserConnected();
         while (data_user_connected.moveToNext()) {
             if (!data_user_connected.getString(0).equals("")) {
-                user_name.setText("" + data_user_connected.getString(1) + " " + data_user_connected.getString(2));
+                user_id = data_user_connected.getString(0);
+                user_lastname = data_user_connected.getString(1);
+                user_firstname = data_user_connected.getString(2);
+                user_name.setText(user_lastname+ " " + user_firstname);
                 user_email.setText(data_user_connected.getString(3));
                 user_birthday.setText(data_user_connected.getString(5));
                 user_but.setText(data_user_connected.getString(6));
@@ -80,6 +107,7 @@ public class UserProfilActivity extends AppCompatActivity {
                         .show();
             }
         });
+
         this.button_parameter = findViewById(R.id.button_parametre);
         button_parameter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,9 +152,16 @@ public class UserProfilActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         new_name = editText_name.getText().toString();
                         new_lastname = editText_lastname.getText().toString();
-
-                        // TODO qui modifie juste sur la page pas dans la base
-                        user_name.setText(new_lastname.toUpperCase() + " " + new_name);
+                        if((new_name.equals("") && (!new_lastname.equals(""))) || ((!new_name.equals("")) && new_lastname.equals("")) || ((!new_name.equals("")) && (!new_lastname.equals(""))) ){
+                            action = "update_name";
+                            UpdateData = new UpdateDataAsyncTask();
+                            UpdateData.execute();
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+                            builder.setMessage("La modification à échoué");
+                            builder.setPositiveButton("J'ai compris", null);
+                            builder.show();
+                        }
                     }
                 });
                 builder.show();
@@ -212,6 +247,7 @@ public class UserProfilActivity extends AppCompatActivity {
                 datedialog.show();
             }
         });
+
         user_birthday_Listener = new DatePickerDialog.OnDateSetListener() {
             /**
              * Recuperation des valeurs saisie par l'utilisateur dans le calendrier
@@ -247,5 +283,67 @@ public class UserProfilActivity extends AppCompatActivity {
                         .show();
             }
         });
+    }
+
+    public class UpdateDataAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        /**
+         * Methode qui convertit les différentes informations a transmettre au serveur dans un tableau
+         * les transmets grace a la methode makeSerciveCall
+         * et ensuite récupere un objet JSON au format String
+         * on récupere les valeurs présente au format JSON et on les stock dans des varaibles
+         * @param params
+         * @return
+         */
+        @Override
+        protected Void doInBackground(Void... params) {
+            Log.i("add", " start doInBackground");
+
+            ServiceHandler sh = new ServiceHandler();
+
+            List<NameValuePair> nameValuePair = new ArrayList<>(1);
+
+            nameValuePair.add(new BasicNameValuePair("action", action));
+            nameValuePair.add(new BasicNameValuePair("user_id", user_id));
+            nameValuePair.add(new BasicNameValuePair("new_name", new_name));
+            nameValuePair.add(new BasicNameValuePair("new_lastname", new_lastname.toUpperCase()));
+
+            String jsonStr = sh.makeServiceCall(urlUpdate, ServiceHandler.POST, nameValuePair);
+
+            Log.d("Response: ", jsonStr);
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+                    success = jsonObj.getInt("success");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            Log.i("add", " end doInBackground");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+            super.onPostExecute(result);
+            if (success!=1){
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+                builder.setMessage("La modification à échoué");
+                builder.setPositiveButton("J'ai compris", null);
+                builder.show();
+            } else {
+                if (action.equals("update_name")){
+                    //TODO actualisation de la bd local
+                    if (new_lastname.equals("")){
+                        new_lastname = user_lastname;
+                    } else if (new_name.equals("")){
+                        new_name = user_firstname;
+                    }
+                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),new_lastname.toUpperCase(),new_name,user_email.getText().toString(),user_password.getText().toString(),user_birthday.getText().toString(),user_but.getText().toString());
+                    user_connected.updateDataUser(Integer.parseInt(user_id),new_lastname.toUpperCase(),new_name,user_email.getText().toString(),user_password.getText().toString(),user_birthday.getText().toString(),user_but.getText().toString());
+                    user_name.setText(new_lastname.toUpperCase() + " " + new_name);
+                }
+            }
+        }
     }
 }

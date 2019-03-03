@@ -36,12 +36,19 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
     private Button button_goback;
     private Button button_inscription;
     private DatePickerDialog.OnDateSetListener date_de_naissance_Listener;
-    EditText name,last_name,password,email;
-    Button date_de_naissance;
-    Spinner but;
-    String urlAdd = "https://dateplaceapp.000webhostapp.com/insert_user.php";
-    String message,birthday,password_user;
-    int success,user_id,year,month,day;
+    private EditText name;
+    private EditText last_name;
+    private EditText password;
+    private EditText email;
+    private Button date_de_naissance;
+    private Spinner but;
+    private String urlAdd = "https://dateplaceapp.000webhostapp.com/insert_user.php";
+    private String message,birthday,password_user;
+    private int success;
+    private int user_id;
+    private int year;
+    private int month;
+    private int day;
     AddDataAsyncTask AddData;
     DatabaseHelper users =null;
 
@@ -227,12 +234,6 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             return null;
         }
 
-        /**
-         * Methode qui s'execute apres la methode doInBackground et permet en fonction du résultat obtenu suite a la requete
-         * de redirigé l'utilisateur vers la l'activité Connexion ou bien de generer une fenetre de dialogue
-         * pour signifier l'echec de l'inscription
-         * @param result    resultat de la methode doInBackground
-         */
         @Override
         protected void onPostExecute(Void result){
             super.onPostExecute(result);

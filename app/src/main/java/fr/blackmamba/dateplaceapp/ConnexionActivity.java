@@ -26,15 +26,15 @@ import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 
 public class ConnexionActivity extends AppCompatActivity {
 
-    EditText email, password;
-    String urlAdd = "https://dateplaceapp.000webhostapp.com/login.php";
-    String message, last_name, name, birthday, but, password_user;
-    ConnexionActivity.GetDataAsyncTask GetData;
-    int success, user_id;
-    DatabaseHelper user_connected = null;
+    private EditText email, password;
+    private String urlConnect = "https://dateplaceapp.000webhostapp.com/login.php";
+    private String message, last_name, name, birthday, but, password_user;
+    private int success, user_id;
     private Button button_goback;
     private Button button_connect;
     private ImageView button_go_inscription;
+    ConnexionActivity.GetDataAsyncTask GetData;
+    DatabaseHelper user_connected = null;
 
     /**
      * Affiche l'activité Connexion
@@ -146,7 +146,7 @@ public class ConnexionActivity extends AppCompatActivity {
             nameValuePair.add(new BasicNameValuePair("email", email.getText().toString()));
             nameValuePair.add(new BasicNameValuePair("password", password.getText().toString()));
 
-            String jsonStr = sh.makeServiceCall(urlAdd, ServiceHandler.POST, nameValuePair);
+            String jsonStr = sh.makeServiceCall(urlConnect, ServiceHandler.POST, nameValuePair);
             Log.d("Response: ", jsonStr);
 
             if (jsonStr != null) {
