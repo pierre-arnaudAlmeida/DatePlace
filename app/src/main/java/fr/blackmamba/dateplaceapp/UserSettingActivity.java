@@ -25,4 +25,11 @@ public class UserSettingActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    @Override
+    public void onBackPressed()
+    {
+
+    }
 }
