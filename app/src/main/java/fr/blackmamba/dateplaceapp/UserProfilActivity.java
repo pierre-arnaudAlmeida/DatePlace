@@ -1,5 +1,6 @@
 package fr.blackmamba.dateplaceapp;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,10 +13,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
@@ -54,6 +59,7 @@ public class UserProfilActivity extends AppCompatActivity {
     private String new_email;
     private String new_birthday;
     private String new_birthday2;
+    private String new_goal;
     private String action;
     private DatePickerDialog.OnDateSetListener user_birthday_Listener;
     private String urlUpdate = "https://dateplaceapp.000webhostapp.com/update_datas.php";
@@ -271,29 +277,94 @@ public class UserProfilActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 new_birthday = "" + year + "/" + month + "/" + day;
-                new_birthday2 = "" + year + "-" + month + "-" + day;
+                if(month <10 && day <10) {
+                    new_birthday2 = "" + year + "-0" + month + "-0" + day;
+                } else if (month<10 && day>9){
+                    new_birthday2 = "" + year + "-0" + month + "-" + day;
+                } else if (month>9 && day<10){
+                    new_birthday2 = "" + year + "-" + month + "-0" + day;
+                } else if (month>9 && day>9){
+                    new_birthday2 = "" + year + "-" + month + "-" + day;
+                }
                 action = "update_birthday";
                 UpdateData = new UpdateDataAsyncTask();
                 UpdateData.execute();
-                //TODO corrigé le bug du format de la date ici rajouter des 0 devant les chiffres
             }
         };
 
         user_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LinearLayout layout = new LinearLayout(UserProfilActivity.this);
+                layout.setOrientation(LinearLayout.VERTICAL);
+
+                Button textView_1 = new Button(UserProfilActivity.this);
+                textView_1.setText("Date Place");
+                layout.addView(textView_1);
+
+                Button textView_2 = new Button(UserProfilActivity.this);
+                textView_2.setText("Un lieu pour entre potes");
+                layout.addView(textView_2);
+
+                Button textView_3 = new Button(UserProfilActivity.this);
+                textView_3.setText("Un lieu pour sortir avec mes parents");
+                layout.addView(textView_3);
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
                 builder.setMessage("Modification du but ");
+                builder.setView(layout);
 
                 builder.setNegativeButton("Annuler", null);
-                builder.setPositiveButton("Modifier", new DialogInterface.OnClickListener() {
+
+                textView_1.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //TODO faire une liste a cocher pour les trois cas possible et permettre d'en choisir q'un
+                    public void onClick(View v) {
+                        action = "update_goal";
+                        new_goal = "Date Place";
+                        if(new_goal.equals(user_but.getText().toString())){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+                            builder.setMessage("Vous avez deja ce but");
+                            builder.setPositiveButton("J'ai compris", null);
+                            builder.show();
+                        } else {
+                            UpdateData = new UpdateDataAsyncTask();
+                            UpdateData.execute();
+                        }
                     }
-                })
-                        .create()
-                        .show();
+                });
+                textView_2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        action = "update_goal";
+                        new_goal = "Un lieu pour entre potes";
+                        if(new_goal.equals(user_but.getText().toString())){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+                            builder.setMessage("Vous avez deja ce but");
+                            builder.setPositiveButton("J'ai compris", null);
+                            builder.show();
+                        } else {
+                            UpdateData = new UpdateDataAsyncTask();
+                            UpdateData.execute();
+                        }
+                    }
+                });
+                textView_3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        action = "update_goal";
+                        new_goal = "Un lieu pour sortir avec mes parents";
+                        if(new_goal.equals(user_but.getText().toString())){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+                            builder.setMessage("Vous avez deja ce but");
+                            builder.setPositiveButton("J'ai compris", null);
+                            builder.show();
+                        } else {
+                            UpdateData = new UpdateDataAsyncTask();
+                            UpdateData.execute();
+                        }
+                    }
+                });
+                builder.show();
             }
         });
     }
@@ -328,6 +399,8 @@ public class UserProfilActivity extends AppCompatActivity {
             } else if (action.equals("update_password")){
                 nameValuePair.add(new BasicNameValuePair("actual_password", actual_password));
                 nameValuePair.add(new BasicNameValuePair("new_password", new_password));
+            } else if (action.equals("update_goal")){
+                nameValuePair.add(new BasicNameValuePair("new_goal", new_goal));
             }
 
             String jsonStr = sh.makeServiceCall(urlUpdate, ServiceHandler.POST, nameValuePair);
@@ -372,8 +445,15 @@ public class UserProfilActivity extends AppCompatActivity {
                     user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname,new_email.toLowerCase(),user_password.getText().toString(),user_birthday.getText().toString(),user_but.getText().toString());
                     user_email.setText(new_email.toLowerCase());
                 } else if (action.equals("update_password")){
-                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),user_lastname,user_firstname,user_email.getText().toString(),new_password,new_birthday2,user_but.getText().toString());
-                    user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname,user_email.getText().toString(),new_password,new_birthday2,user_but.getText().toString());
+                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),user_lastname,user_firstname,user_email.getText().toString(),new_password,user_birthday.getText().toString(),user_but.getText().toString());
+                    user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname,user_email.getText().toString(),new_password,user_birthday.getText().toString(),user_but.getText().toString());
+                } else if (action.equals("update_goal")){
+                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),user_lastname,user_firstname,user_email.getText().toString(),user_password.getText().toString(),user_birthday.getText().toString(),new_goal);
+                    user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname,user_email.getText().toString(),user_password.getText().toString(),user_birthday.getText().toString(),new_goal);
+                    user_but.setText(new_goal);
+                    Intent go_before = new Intent(getApplicationContext(), UserProfilActivity.class);
+                    startActivity(go_before);
+                    finish();
                 }
             }
         }
