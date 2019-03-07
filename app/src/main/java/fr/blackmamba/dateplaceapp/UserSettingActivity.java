@@ -30,6 +30,8 @@ public class UserSettingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-
+        Intent back = new Intent(getApplicationContext(), UserProfilActivity.class);
+        startActivity(back);
+        finish();
     }
 }
