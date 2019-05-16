@@ -22,7 +22,8 @@
     <string name="twitterUsername">\@joeyni</string>
 
     <string name="user_birthday"></string>
-    <string name="user_name">\Health</string>
+    <string name="user_name">Nom</string>
+    <string name="user_firstname">Prenom</string>
     <string name="user_place">Paris, France</string>
     <string name="email">Email</string>
     <string name="user_email">************@******</string>
