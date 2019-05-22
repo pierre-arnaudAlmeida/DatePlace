@@ -2,6 +2,7 @@ package fr.blackmamba.dateplaceapp;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -48,6 +49,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
     private int day;
     AddDataAsyncTask AddData;
     DatabaseHelper users =null;
+    Resources resources=getResources();
 
     /**
      * Affiche l'activité Inscription
@@ -78,7 +80,6 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             /**
              * Si l'utilisateur clique sur le bouton retour, il sera redirigé vers l'activité
              * RunAppActivity
-             * @param v
              */
             @Override
             public void onClick(View v) {
@@ -89,7 +90,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
         });
 
         //Ajout d'un écouteur au bouton date_de_naissance
-        this.date_de_naissance = (Button) findViewById(R.id.newdate_de_naissance);
+        this.date_de_naissance = findViewById(R.id.newdate_de_naissance);
         date_de_naissance.setOnClickListener(new View.OnClickListener() {
                 /**
                  * Quand l'utilisateur clique sur le bouton Calendrier il y a une popup qui s'ouvre lui permettant
@@ -143,7 +144,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
                 if ( name.getText().toString().equals("") || last_name.getText().toString().equals("") || password.getText().toString().equals("") || email.getText().toString().equals("")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
                     builder.setMessage("Les champs ne sont pas tous renseigner")
-                           .setNegativeButton("Recommencer",null)
+                           .setNegativeButton(resources.getString(R.string.retry_message),null)
                            .create()
                            .show();
                 }else{
@@ -159,14 +160,14 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
                         }else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
                             builder.setMessage("Vous n'avez pas de connexion internet")
-                                    .setNegativeButton("Recommencer",null)
+                                    .setNegativeButton(resources.getString(R.string.retry_message),null)
                                     .create()
                                     .show();
                         }
                     }else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
                         builder.setMessage("Vous n'avez pas entrer une adresse email :)")
-                                .setNegativeButton("Recommencer",null)
+                                .setNegativeButton(resources.getString(R.string.retry_message),null)
                                 .create()
                                 .show();
                     }
@@ -243,7 +244,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
                }else {
                    AlertDialog.Builder builder = new AlertDialog.Builder(InscriptionActivity.this);
                    builder.setMessage("L'inscription à échoué");
-                   builder.setNegativeButton("Recommencer", null);
+                   builder.setNegativeButton(resources.getString(R.string.retry_message), null);
                    builder.show();
                }
         }

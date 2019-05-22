@@ -65,5 +65,9 @@
     <string name="modification_goal">Modification du but</string>
     <string name="current_goal">Vous avez deja ce but</string>
     <string name="modification_failed_message">La modification à échoué</string>
-
+    <string name="retry_message">Recommencer</string>
+    <string name="mail_or_password_missing">Il manque mot de passe/email</string>
+    <string name="no_connection_message">Vous n\'avez pas de connexion internet</string>
+    <string name="not_an_mail">Vous n\'avez pas entrer une adresse email</string>
+    <string name="connection_failed">La Connection à échoué</string>
 </resources>

@@ -249,8 +249,9 @@ public class UserProfilActivity extends AppCompatActivity {
                     new_birthday2 = "" + year + "-0" + month + "-" + day;
                  else if (day<10)
                     new_birthday2 = "" + year + "-" + month + "-0" + day;
-                 else if (day>9)
+                 else if (day>9) {
                     new_birthday2 = "" + year + "-" + month + "-" + day;
+                }
 
                 action = "update_birthday";
                 UpdateData = new UpdateDataAsyncTask();

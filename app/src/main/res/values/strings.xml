@@ -65,4 +65,10 @@
     <string name="modification_goal">Modification of goal</string>
     <string name="current_goal">You already have this goal</string>
     <string name="modification_failed_message">Modification failed</string>
+    <string name="retry_message">Retry</string>
+    <string name="mail_or_password_missing">Password/Mail missing</string>
+    <string name="no_connection_message">You don\'t have connection</string>
+    <string name="not_an_mail">This is not an email</string>
+    <string name="connection_failed">Connection failed</string>
+
 </resources>

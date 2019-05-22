@@ -1,6 +1,8 @@
 package fr.blackmamba.dateplaceapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -10,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -24,19 +25,19 @@ import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 public class ConnexionActivity extends AppCompatActivity {
 
     private EditText email, password;
-    private String urlConnect = "https://dateplaceapp.000webhostapp.com/login.php";
-    private String message, last_name, name, birthday, but, password_user;
+    private String last_name;
+    private String name;
+    private String birthday;
+    private String but;
+    private String password_user;
     private int success, user_id;
-    private Button button_goback;
-    private Button button_connect;
-    private Button button_go_inscription;
     ConnexionActivity.GetDataAsyncTask GetData;
     DatabaseHelper user_connected = null;
+    Resources resources=getResources();
+
 
     /**
      * Affiche l'activité Connexion
-     *
-     * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +46,15 @@ public class ConnexionActivity extends AppCompatActivity {
 
         user_connected = new DatabaseHelper(this);
 
-        email = (EditText) findViewById(R.id.connexion_identifier);
-        password = (EditText) findViewById(R.id.connexion_password);
+        email = findViewById(R.id.connexion_identifier);
+        password = findViewById(R.id.connexion_password);
 
-        this.button_goback = findViewById(R.id.button_goback);
+        Button button_goback = findViewById(R.id.button_goback);
         button_goback.setOnClickListener(new View.OnClickListener() {
 
             /**
              * Si l'utilisateur clique sur le bouton retour, il sera redirigé vers l'activité
              * RunAppActivity qui est la première activité de l'application
-             *
-             * @param v
              */
             @Override
             public void onClick(View v) {
@@ -65,22 +64,20 @@ public class ConnexionActivity extends AppCompatActivity {
             }
         });
 
-        this.button_connect = findViewById(R.id.button_connect);
+        Button button_connect = findViewById(R.id.button_connect);
         button_connect.setOnClickListener(new View.OnClickListener() {
             /**
              * Apres le clic sur le bouton
              * Si les champs sont vide ou bien que l'adresse mail ne contient pas de @
              * alors une popup de dialogue apparait pour prevenir l'utilisateur
              * Sinon on execute la methode pour transmettre les informations au serveur
-             *
-             * @param v
              */
             @Override
             public void onClick(View v) {
                 if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
-                    builder.setMessage("Il manque mot de passe/email")
-                            .setNegativeButton("Recommencer", null)
+                    builder.setMessage(resources.getString(R.string.mail_or_password_missing))
+                            .setNegativeButton(resources.getString(R.string.retry_message), null)
                             .create()
                             .show();
                 } else {
@@ -91,15 +88,15 @@ public class ConnexionActivity extends AppCompatActivity {
                             GetData.execute();
                         } else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
-                            builder.setMessage("Vous n'avez pas de connexion internet")
-                                    .setNegativeButton("Recommencer", null)
+                            builder.setMessage(resources.getString(R.string.no_connection_message))
+                                    .setNegativeButton(resources.getString(R.string.retry_message), null)
                                     .create()
                                     .show();
                         }
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
-                        builder.setMessage("Vous n'avez pas entrer une adresse email :)")
-                                .setNegativeButton("Recommencer", null)
+                        builder.setMessage(resources.getString(R.string.not_an_mail))
+                                .setNegativeButton(resources.getString(R.string.retry_message), null)
                                 .create()
                                 .show();
                     }
@@ -107,28 +104,23 @@ public class ConnexionActivity extends AppCompatActivity {
             }
         });
 
-        this.button_go_inscription = findViewById(R.id.button_go_inscription);
-        button_go_inscription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent inscription = new Intent(getApplicationContext(), InscriptionActivity.class);
-                startActivity(inscription);
-                finish();
-            }
+        Button button_go_inscription = findViewById(R.id.button_go_inscription);
+        button_go_inscription.setOnClickListener(v -> {
+            Intent inscription = new Intent(getApplicationContext(), InscriptionActivity.class);
+            startActivity(inscription);
+            finish();
         });
 
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     public class GetDataAsyncTask extends AsyncTask<Void, Void, Void> {
         /**
          * Methode qui convertit les différentes informations a transmettre au serveur dans un tableau
          * les transmets grace a la methode makeSerciveCall
          * et ensuite récupere un objet JSON au format String
          * on récupere les valeurs présente au format JSON et on les stock dans des varaibles
-         *
-         * @param params
-         * @return
          */
         @Override
         protected Void doInBackground(Void... params) {
@@ -140,6 +132,7 @@ public class ConnexionActivity extends AppCompatActivity {
             nameValuePair.add(new BasicNameValuePair("email", email.getText().toString().toLowerCase()));
             nameValuePair.add(new BasicNameValuePair("password", password.getText().toString()));
 
+            String urlConnect = "https://dateplaceapp.000webhostapp.com/login.php";
             String jsonStr = sh.makeServiceCall(urlConnect, ServiceHandler.POST, nameValuePair);
             Log.d("Response: ", jsonStr);
 
@@ -153,7 +146,7 @@ public class ConnexionActivity extends AppCompatActivity {
                     name = jsonObj.getString("name");
                     birthday = jsonObj.getString("birthday");
                     but = jsonObj.getString("but");
-                    message = jsonObj.getString("message");
+                    String message = jsonObj.getString("message");
                     Log.i("success", String.valueOf(success));
                     Log.i("message", message);
                 } catch (JSONException e) {
@@ -210,8 +203,8 @@ public class ConnexionActivity extends AppCompatActivity {
                 finish();
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ConnexionActivity.this);
-                builder.setMessage("La Connection à échoué");
-                builder.setNegativeButton("Recommencer", null);
+                builder.setMessage(resources.getString(R.string.connection_failed));
+                builder.setNegativeButton(resources.getString(R.string.retry_message), null);
                 builder.show();
             }
         }
