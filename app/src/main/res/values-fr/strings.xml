@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">DatePlace</string>
+    <string name="button_connexion_text">Se Connecter</string>
+    <string name="button_inscription_text">S\'inscrire</string>
+    <string name="connexion_identifier_HintText">Email</string>
+    <string name="connexion_password_HintText">Mot de passe</string>
+    <string name="button_goback_text">Retour</string>
+    <string name="button_connect_text">GOOO</string>
+    <string name="button_inscrip_text">Je m\'inscris</string>
+    <string name="title_pseudo_text">Prénom</string>
+    <string name="title_nom_text">Nom</string>
+    <string name="title_adressemail_text">Adresse email</string>
+    <string name="title_password_text">Mot de Passe</string>
+    <string name="title_date_of_birth_text">Date de Naissance</string>
+    <string name="title_goal_text">Ce que je recherche</string>
+    <string name="calendar">Calendrier</string>
+    <string-array name="goal">
+        <item>Date Place</item>
+        <item>Un lieu pour entre potes</item>
+        <item>Un lieu pour sortir avec mes parents</item>
+    </string-array>
+    <string name="twitterUsername">\@joeyni</string>
+    <string name="user_place">Paris, France</string>
+    <string name="user_email">************@******</string>
+    <string name="user_password">***********</string>
+    <string name="log_out">Déconnexion</string>
+    <string name="search">Rechercher</string>
+    <string name="user_goal_title">But</string>
+    <string name="access_token">pk.eyJ1IjoiZGVzbGF5IiwiYSI6ImNqcTQxdXM4dTFrYW00OG11ZHJieHR1YjQifQ.x0wMIY5il7ubistZeYVcEw</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="setting">Paramètres</string>
+    <string name="rotation_screen">Bloquer rotation</string>
+    <string name="notif">Gérer les notifications</string>
+    <string name="help">Aide</string>
+    <string name="language">Langue</string>
+    <string name="update">Version à jour</string>
+    <string name="social_media">Réseaux sociaux</string>
+    <string name="contact">Contact</string>
+    <string name="delete_user">Supprimer compte</string>
+    <string name="authorization">Autorisation</string>
+    <string name="legal_notice">Mention légale</string>
+
+    <string name="user_name"></string>
+    <string name="user_firstname"></string>
+    <string name="user_birthday"></string>
+    <string name="user_goal"></string>
+</resources>
