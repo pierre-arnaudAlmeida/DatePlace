@@ -45,7 +45,6 @@
     <string name="user_firstname"></string>
     <string name="user_birthday"></string>
     <string name="user_goal"></string>
-
     <string name="disconnection_message">You really want to disconnect ?</string>
     <string name="positive_response">Yes</string>
     <string name="negative_response">No</string>
@@ -56,4 +55,14 @@
     <string name="cancel_message">Cancel</string>
     <string name="modify_message">Modify</string>
     <string name="button_sign_up">Sign Up</string>
+    <string name="hold_password_message">Hold password</string>
+    <string name="new_password_message">New password</string>
+    <string name="modification_password_message">Modification of password</string>
+    <string name="empty_fields_message">Fields empty</string>
+    <string name="understand_message">I understant</string>
+    <string name="new_email_message">New email</string>
+    <string name="modification_email_message">Modification email</string>
+    <string name="modification_goal">Modification of goal</string>
+    <string name="current_goal">You already have this goal</string>
+    <string name="modification_failed_message">Modification failed</string>
 </resources>

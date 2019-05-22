@@ -163,15 +163,15 @@ public class UserProfilActivity extends AppCompatActivity {
             layout.setOrientation(LinearLayout.VERTICAL);
 
             EditText editText_actual_password = new EditText(UserProfilActivity.this);
-            editText_actual_password.setHint("Ancien mot de passe");
+            editText_actual_password.setHint(resources.getString(R.string.hold_password_message));
             layout.addView(editText_actual_password);
 
             EditText editText_new_password = new EditText(UserProfilActivity.this);
-            editText_new_password.setHint("Nouveau mot de passe");
+            editText_new_password.setHint(resources.getString(R.string.new_password_message));
             layout.addView(editText_new_password);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-            builder.setMessage("Modification du mot de passe ");
+            builder.setMessage(resources.getString(R.string.modification_password_message));
             builder.setView(layout);
 
             builder.setNegativeButton(resources.getString(R.string.cancel_message), null);
@@ -184,8 +184,8 @@ public class UserProfilActivity extends AppCompatActivity {
                     UpdateData.execute();
                 } else {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(UserProfilActivity.this);
-                    builder1.setMessage("Les champs ne sont pas tous renseigné");
-                    builder1.setPositiveButton("J'ai compris", null);
+                    builder1.setMessage(resources.getString(R.string.empty_fields_message));
+                    builder1.setPositiveButton(resources.getString(R.string.understand_message), null);
                     builder1.show();
                 }
             })
@@ -195,10 +195,10 @@ public class UserProfilActivity extends AppCompatActivity {
 
         textViewUserEmail.setOnClickListener(view -> {
             EditText editText_new_email = new EditText(UserProfilActivity.this);
-            editText_new_email.setHint("Nouvelle adresse mail ");
+            editText_new_email.setHint(resources.getString(R.string.new_email_message));
 
             AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-            builder.setMessage("Modification de l'adresse mail ");
+            builder.setMessage(resources.getString(R.string.modification_email_message));
             builder.setView(editText_new_email);
 
             builder.setNegativeButton(resources.getString(R.string.cancel_message), null);
@@ -276,18 +276,18 @@ public class UserProfilActivity extends AppCompatActivity {
             layout.addView(textView_3);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-            builder.setMessage("Modification du but ");
+            builder.setMessage(resources.getString(R.string.modification_goal));
             builder.setView(layout);
 
             builder.setNegativeButton(resources.getString(R.string.cancel_message), null);
 
             textView_1.setOnClickListener(v -> {
                 action = "update_goal";
-                new_goal = "Date Place";
+                new_goal = goals[0];
                 if(new_goal.equals(textViewUserGoal.getText().toString())){
                     AlertDialog.Builder builder12 = new AlertDialog.Builder(UserProfilActivity.this);
-                    builder12.setMessage("Vous avez deja ce but");
-                    builder12.setPositiveButton("J'ai compris", null);
+                    builder12.setMessage(resources.getString(R.string.current_goal));
+                    builder12.setPositiveButton(resources.getString(R.string.understand_message), null);
                     builder12.show();
                 } else {
                     UpdateData = new UpdateDataAsyncTask();
@@ -296,11 +296,11 @@ public class UserProfilActivity extends AppCompatActivity {
             });
             textView_2.setOnClickListener(v -> {
                 action = "update_goal";
-                new_goal = "Un lieu pour entre potes";
+                new_goal = goals[1];
                 if(new_goal.equals(textViewUserGoal.getText().toString())){
                     AlertDialog.Builder builder13 = new AlertDialog.Builder(UserProfilActivity.this);
-                    builder13.setMessage("Vous avez deja ce but");
-                    builder13.setPositiveButton("J'ai compris", null);
+                    builder13.setMessage(resources.getString(R.string.current_goal));
+                    builder13.setPositiveButton(resources.getString(R.string.understand_message), null);
                     builder13.show();
                 } else {
                     UpdateData = new UpdateDataAsyncTask();
@@ -309,11 +309,11 @@ public class UserProfilActivity extends AppCompatActivity {
             });
             textView_3.setOnClickListener(v -> {
                 action = "update_goal";
-                new_goal = "Un lieu pour sortir avec mes parents";
+                new_goal = goals[2];
                 if(new_goal.equals(textViewUserGoal.getText().toString())){
                     AlertDialog.Builder builder14 = new AlertDialog.Builder(UserProfilActivity.this);
-                    builder14.setMessage("Vous avez deja ce but");
-                    builder14.setPositiveButton("J'ai compris", null);
+                    builder14.setMessage(resources.getString(R.string.current_goal));
+                    builder14.setPositiveButton(resources.getString(R.string.understand_message), null);
                     builder14.show();
                 } else {
                     UpdateData = new UpdateDataAsyncTask();
@@ -326,7 +326,7 @@ public class UserProfilActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     public class UpdateDataAsyncTask extends AsyncTask<Void, Void, Void> {
-
+        Resources resources=getResources();
         /**
          * Methode qui convertit les différentes informations a transmettre au serveur dans un tableau
          * les transmets grace a la methode makeSerciveCall
@@ -384,8 +384,8 @@ public class UserProfilActivity extends AppCompatActivity {
             super.onPostExecute(result);
             if (success!=1){
                 AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-                builder.setMessage("La modification à échoué");
-                builder.setPositiveButton("J'ai compris", null);
+                builder.setMessage(resources.getString(R.string.modification_failed_message));
+                builder.setPositiveButton(resources.getString(R.string.understand_message), null);
                 builder.show();
             } else {
                 switch (action) {

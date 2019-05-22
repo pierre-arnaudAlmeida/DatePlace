@@ -45,7 +45,6 @@
     <string name="user_firstname"></string>
     <string name="user_birthday"></string>
     <string name="user_goal"></string>
-
     <string name="disconnection_message">Voulez-vous vraiment vous deconnecter ?</string>
     <string name="positive_response">Oui</string>
     <string name="negative_response">Non</string>
@@ -56,5 +55,15 @@
     <string name="cancel_message">Annuler</string>
     <string name="modify_message">Modifier</string>
     <string name="button_sign_up">Inscription</string>
+    <string name="hold_password_message">Ancien mot de passe</string>
+    <string name="new_password_message">Nouveau mot de passe</string>
+    <string name="modification_password_message">Modification du mot de passe</string>
+    <string name="empty_fields_message">Les champs ne sont pas tous renseigné</string>
+    <string name="understand_message">J\'ai compris</string>
+    <string name="new_email_message">Nouvelle adresse mail</string>
+    <string name="modification_email_message">Modification de l\'adresse mail</string>
+    <string name="modification_goal">Modification du but</string>
+    <string name="current_goal">Vous avez deja ce but</string>
+    <string name="modification_failed_message">La modification à échoué</string>
 
 </resources>
