@@ -1,4 +1,4 @@
-package fr.blackmamba.dateplaceapp;
+package fr.blackmamba.dateplaceapp.map;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import fr.blackmamba.dateplaceapp.R;
 
 public class villeListAdapter extends ArrayAdapter<ville>{
     private static final String TAG = "villeListAdapter";

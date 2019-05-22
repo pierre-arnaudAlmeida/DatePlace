@@ -1,4 +1,4 @@
-package fr.blackmamba.dateplaceapp;
+package fr.blackmamba.dateplaceapp.map;
 
 public class ville {
 

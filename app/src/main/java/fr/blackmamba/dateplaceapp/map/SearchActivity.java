@@ -1,4 +1,4 @@
-package fr.blackmamba.dateplaceapp;
+package fr.blackmamba.dateplaceapp.map;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import fr.blackmamba.dateplaceapp.R;
 
 public class SearchActivity extends AppCompatActivity {
 

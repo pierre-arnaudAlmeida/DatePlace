@@ -36,24 +36,24 @@ package="fr.blackmamba.dateplaceapp">
         android:theme="@style/FullscreenTheme"
         android:parentActivityName=".launcher.RunAppActivity"/>
     <activity
-        android:name=".PlaceActivity"
+        android:name=".place.PlaceActivity"
         android:theme="@style/AppTheme" />
     <activity
         android:name=".profile.UserProfilActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/AppTheme"
-        android:parentActivityName=".MapActivity"/>
+        android:parentActivityName=".map.MapActivity"/>
     <activity
         android:name=".profile.UserSettingActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/AppTheme"
         android:parentActivityName=".profile.UserProfilActivity"/>
     <activity
-        android:name=".SearchActivity"
+        android:name=".map.SearchActivity"
         android:theme="@style/AppTheme"
-        android:parentActivityName=".MapActivity"/>
+        android:parentActivityName=".map.MapActivity"/>
     <activity
-        android:name=".MapActivity"
+        android:name=".map.MapActivity"
         android:theme="@style/AppTheme">
     </activity>
 </application>

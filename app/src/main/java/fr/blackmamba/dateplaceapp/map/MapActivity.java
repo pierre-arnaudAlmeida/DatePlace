@@ -1,4 +1,4 @@
-package fr.blackmamba.dateplaceapp;
+package fr.blackmamba.dateplaceapp.map;
 
 import android.content.Intent;
 import android.location.Location;
@@ -25,6 +25,9 @@ import com.mapbox.mapboxsdk.plugins.locationlayer.LocationLayerPlugin;
 import com.mapbox.mapboxsdk.plugins.locationlayer.modes.CameraMode;
 import com.mapbox.mapboxsdk.plugins.locationlayer.modes.RenderMode;
 import java.util.List;
+
+import fr.blackmamba.dateplaceapp.place.PlaceActivity;
+import fr.blackmamba.dateplaceapp.R;
 import fr.blackmamba.dateplaceapp.profile.UserProfilActivity;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, LocationEngineListener, PermissionsListener {

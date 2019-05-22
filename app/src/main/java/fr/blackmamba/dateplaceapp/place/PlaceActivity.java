@@ -1,4 +1,4 @@
-package fr.blackmamba.dateplaceapp;
+package fr.blackmamba.dateplaceapp.place;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+
+import fr.blackmamba.dateplaceapp.R;
 
 public class PlaceActivity extends AppCompatActivity {
 
