@@ -70,4 +70,5 @@
     <string name="no_connection_message">Vous n\'avez pas de connexion internet</string>
     <string name="not_an_mail">Vous n\'avez pas entrer une adresse email</string>
     <string name="connection_failed">La Connection à échoué</string>
+    <string name="inscription_failed">L\'inscription à échoué</string>
 </resources>

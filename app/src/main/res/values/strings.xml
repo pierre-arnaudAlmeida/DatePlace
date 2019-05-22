@@ -70,5 +70,6 @@
     <string name="no_connection_message">You don\'t have connection</string>
     <string name="not_an_mail">This is not an email</string>
     <string name="connection_failed">Connection failed</string>
+    <string name="inscription_failed">Inscription failed</string>
 
 </resources>
