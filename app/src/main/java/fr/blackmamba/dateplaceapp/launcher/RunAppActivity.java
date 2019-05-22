@@ -1,4 +1,4 @@
-package fr.blackmamba.dateplaceapp;
+package fr.blackmamba.dateplaceapp.launcher;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,6 +14,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+import fr.blackmamba.dateplaceapp.MapActivity;
+import fr.blackmamba.dateplaceapp.R;
 import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 
@@ -112,13 +114,9 @@ public class RunAppActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             Log.i("add", " start doInBackground");
             ServiceHandler sh = new ServiceHandler();
-
             List<NameValuePair> nameValuePair = new ArrayList<>(1);
-
             nameValuePair.add(new BasicNameValuePair("user_id", String.valueOf(user_id)));
-
             String jsonStr = sh.makeServiceCall(urlGet, ServiceHandler.POST, nameValuePair);
-            Log.d("Response: ", jsonStr);
 
             if (jsonStr != null) {
                 try {
@@ -131,7 +129,6 @@ public class RunAppActivity extends AppCompatActivity {
                     birthday = jsonObj.getString("birthday");
                     but = jsonObj.getString("goal");
                     password = jsonObj.getString("password");
-                    Log.i("success", String.valueOf(success));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

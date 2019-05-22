@@ -1,4 +1,4 @@
-package fr.blackmamba.dateplaceapp;
+package fr.blackmamba.dateplaceapp.launcher;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import fr.blackmamba.dateplaceapp.R;
 import fr.blackmamba.dateplaceapp.backgroundtask.ConnexionInternet;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;
@@ -47,7 +48,6 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
     private int day;
     AddDataAsyncTask AddData;
     DatabaseHelper users =null;
-    Resources resources=getResources();
 
     /**
      * Affiche l'activité Inscription
@@ -57,6 +57,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inscription);
         users = new DatabaseHelper(this);
+        Resources resources=getResources();
         //Affectation de la liste déroulante
         Spinner goal = findViewById(R.id.newgoal);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.goal, android.R.layout.simple_spinner_item);
@@ -180,7 +181,6 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
 
     @SuppressLint("StaticFieldLeak")
     public class AddDataAsyncTask extends AsyncTask<Void, Void, Void> {
-
         /**
          * Methode qui convertit les différentes informations a transmettre au serveur dans un tableau
          * les transmets grace a la methode makeSerciveCall
@@ -205,16 +205,12 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
             String urlAdd = "https://dateplaceapp.000webhostapp.com/insert_user.php";
             String jsonStr = sh.makeServiceCall(urlAdd, ServiceHandler.POST, nameValuePair);
 
-            Log.d("Response: ", jsonStr);
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     success = jsonObj.getInt("success");
                     user_id = jsonObj.getInt("user_id");
                     password_user = jsonObj.getString("password");
-                    String message = jsonObj.getString("message");
-                    Log.i("success", String.valueOf(success));
-                    Log.i("message", message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -225,6 +221,7 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
 
         @Override
         protected void onPostExecute(Void result){
+            Resources resources=getResources();
             super.onPostExecute(result);
                if (success==1){
                    users.addDataUser(user_id,last_name.getText().toString().toUpperCase(),name.getText().toString(),email.getText().toString(),password_user,birthday,but.getSelectedItem().toString());

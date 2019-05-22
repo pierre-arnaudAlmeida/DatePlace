@@ -1,4 +1,4 @@
-package fr.blackmamba.dateplaceapp;
+package fr.blackmamba.dateplaceapp.launcher;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+import fr.blackmamba.dateplaceapp.MapActivity;
+import fr.blackmamba.dateplaceapp.R;
 import fr.blackmamba.dateplaceapp.backgroundtask.ConnexionInternet;
 import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
@@ -33,7 +35,6 @@ public class ConnexionActivity extends AppCompatActivity {
     private int success, user_id;
     ConnexionActivity.GetDataAsyncTask GetData;
     DatabaseHelper user_connected = null;
-    Resources resources=getResources();
 
 
     /**
@@ -43,7 +44,7 @@ public class ConnexionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
-
+        Resources resources=getResources();
         user_connected = new DatabaseHelper(this);
 
         email = findViewById(R.id.connexion_identifier);
@@ -134,7 +135,6 @@ public class ConnexionActivity extends AppCompatActivity {
 
             String urlConnect = "https://dateplaceapp.000webhostapp.com/login.php";
             String jsonStr = sh.makeServiceCall(urlConnect, ServiceHandler.POST, nameValuePair);
-            Log.d("Response: ", jsonStr);
 
             if (jsonStr != null) {
                 try {
@@ -146,9 +146,6 @@ public class ConnexionActivity extends AppCompatActivity {
                     name = jsonObj.getString("name");
                     birthday = jsonObj.getString("birthday");
                     but = jsonObj.getString("but");
-                    String message = jsonObj.getString("message");
-                    Log.i("success", String.valueOf(success));
-                    Log.i("message", message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -166,6 +163,7 @@ public class ConnexionActivity extends AppCompatActivity {
          */
         @Override
         protected void onPostExecute(Void result) {
+            Resources resources = getResources();
             super.onPostExecute(result);
             int nb_added = 0;
             if (success == 1) {

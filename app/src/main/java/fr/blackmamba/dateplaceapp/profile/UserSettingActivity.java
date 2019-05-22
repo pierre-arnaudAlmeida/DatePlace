@@ -1,9 +1,10 @@
-package fr.blackmamba.dateplaceapp;
+package fr.blackmamba.dateplaceapp.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import fr.blackmamba.dateplaceapp.R;
 
 public class UserSettingActivity extends AppCompatActivity {
 

@@ -1,6 +1,5 @@
-package fr.blackmamba.dateplaceapp;
+package fr.blackmamba.dateplaceapp.profile;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -26,8 +25,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import fr.blackmamba.dateplaceapp.MapActivity;
+import fr.blackmamba.dateplaceapp.R;
 import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
+import fr.blackmamba.dateplaceapp.launcher.RunAppActivity;
 
 public class UserProfilActivity extends AppCompatActivity {
 
@@ -57,7 +59,6 @@ public class UserProfilActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener user_birthday_Listener;
     UpdateDataAsyncTask UpdateData = new UpdateDataAsyncTask();
     DatabaseHelper user_connected;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class UserProfilActivity extends AppCompatActivity {
         this.textViewUserPassword = findViewById(R.id.user_password);
         this.textViewUserBirthday = findViewById(R.id.user_birthday);
         this.textViewUserGoal = findViewById(R.id.user_goal);
-        Resources resources=getResources();
+        Resources resources = getResources();
 
         user_connected = new DatabaseHelper(this);
         Cursor data_user_connected = user_connected.getDataUserConnected();
@@ -325,9 +326,7 @@ public class UserProfilActivity extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("StaticFieldLeak")
     public class UpdateDataAsyncTask extends AsyncTask<Void, Void, Void> {
-        Resources resources=getResources();
         /**
          * Methode qui convertit les différentes informations a transmettre au serveur dans un tableau
          * les transmets grace a la methode makeSerciveCall
@@ -337,11 +336,8 @@ public class UserProfilActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             Log.i("add", " start doInBackground");
-
             ServiceHandler sh = new ServiceHandler();
-
             List<NameValuePair> nameValuePair = new ArrayList<>(1);
-
             nameValuePair.add(new BasicNameValuePair("action", action));
             nameValuePair.add(new BasicNameValuePair("user_id", user_id));
             switch (action) {
@@ -367,7 +363,6 @@ public class UserProfilActivity extends AppCompatActivity {
             String urlUpdate = "https://dateplaceapp.000webhostapp.com/update_datas.php";
             String jsonStr = sh.makeServiceCall(urlUpdate, ServiceHandler.POST, nameValuePair);
 
-            Log.d("Response: ", jsonStr);
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
@@ -382,6 +377,8 @@ public class UserProfilActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result){
+            Resources resources = getResources();
+
             super.onPostExecute(result);
             if (success!=1){
                 AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
