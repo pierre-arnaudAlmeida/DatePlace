@@ -29,7 +29,7 @@ public class ConnexionActivity extends AppCompatActivity {
     private int success, user_id;
     private Button button_goback;
     private Button button_connect;
-    private ImageView button_go_inscription;
+    private Button button_go_inscription;
     ConnexionActivity.GetDataAsyncTask GetData;
     DatabaseHelper user_connected = null;
 

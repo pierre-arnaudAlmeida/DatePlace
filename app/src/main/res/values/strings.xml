@@ -5,7 +5,7 @@
     <string name="connexion_identifier_HintText">Email</string>
     <string name="connexion_password_HintText">Password</string>
     <string name="button_goback_text">Back</string>
-    <string name="button_connect_text">GOOO</string>
+    <string name="button_connect_text">Sign In</string>
     <string name="button_inscrip_text">Subscribe</string>
     <string name="title_pseudo_text">FirstName</string>
     <string name="title_nom_text">LastName</string>
@@ -55,4 +55,5 @@
     <string name="new_lastname_title_message">Modify lastname</string>
     <string name="cancel_message">Cancel</string>
     <string name="modify_message">Modify</string>
+    <string name="button_sign_up">Sign Up</string>
 </resources>
