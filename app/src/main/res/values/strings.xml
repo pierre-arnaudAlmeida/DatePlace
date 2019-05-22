@@ -41,9 +41,18 @@
     <string name="delete_user">Delete account</string>
     <string name="authorization">Authorization</string>
     <string name="legal_notice">Legal Mention</string>
-
     <string name="user_name"></string>
     <string name="user_firstname"></string>
     <string name="user_birthday"></string>
     <string name="user_goal"></string>
+
+    <string name="disconnection_message">You really want to disconnect ?</string>
+    <string name="positive_response">Yes</string>
+    <string name="negative_response">No</string>
+    <string name="new_firstname_message">New FirstName</string>
+    <string name="new_lastname_message">New FirstName</string>
+    <string name="new_firstname_title_message">Modify firstname</string>
+    <string name="new_lastname_title_message">Modify lastname</string>
+    <string name="cancel_message">Cancel</string>
+    <string name="modify_message">Modify</string>
 </resources>

@@ -1,7 +1,9 @@
 package fr.blackmamba.dateplaceapp;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -29,9 +31,6 @@ import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 
 public class UserProfilActivity extends AppCompatActivity {
 
-    private ImageView button_parameter;
-    private ImageView button_map;
-    private TextView button_deconnection;
     private TextView user_title_name;
     private TextView textViewUserName;
     private TextView textViewUserLastname;
@@ -56,8 +55,7 @@ public class UserProfilActivity extends AppCompatActivity {
     private String new_goal;
     private String action;
     private DatePickerDialog.OnDateSetListener user_birthday_Listener;
-    private String urlUpdate = "https://dateplaceapp.000webhostapp.com/update_datas.php";
-    UpdateDataAsyncTask UpdateData;
+    UpdateDataAsyncTask UpdateData = new UpdateDataAsyncTask();
     DatabaseHelper user_connected;
 
     @Override
@@ -72,32 +70,31 @@ public class UserProfilActivity extends AppCompatActivity {
         this.textViewUserPassword = findViewById(R.id.user_password);
         this.textViewUserBirthday = findViewById(R.id.user_birthday);
         this.textViewUserGoal = findViewById(R.id.user_goal);
+        Resources resources=getResources();
 
         user_connected = new DatabaseHelper(this);
         Cursor data_user_connected = user_connected.getDataUserConnected();
-        while (data_user_connected.moveToNext()) {
-            if (!data_user_connected.getString(0).equals("")) {
-                user_id = data_user_connected.getString(0);
-                user_lastname = data_user_connected.getString(1);
-                user_firstname = data_user_connected.getString(2);
-                textViewUserName.setText(user_firstname);
-                textViewUserLastname.setText(user_lastname);
-                user_title_name.setText(user_lastname+ " " + user_firstname);
-                textViewUserEmail.setText(data_user_connected.getString(3));
-                textViewUserBirthday.setText(data_user_connected.getString(5));
-                textViewUserGoal.setText(data_user_connected.getString(6));
-            }
+        while (data_user_connected.moveToNext()) if (!data_user_connected.getString(0).equals("")) {
+            user_id = data_user_connected.getString(0);
+            user_lastname = data_user_connected.getString(1);
+            user_firstname = data_user_connected.getString(2);
+            textViewUserName.setText(user_firstname);
+            textViewUserLastname.setText(user_lastname);
+            user_title_name.setText(user_lastname + " " + user_firstname);
+            textViewUserEmail.setText(data_user_connected.getString(3));
+            textViewUserBirthday.setText(data_user_connected.getString(5));
+            textViewUserGoal.setText(data_user_connected.getString(6));
         }
         data_user_connected.close();
         user_connected.close();
 
-        this.button_deconnection = findViewById(R.id.button_deconnexion);
+        TextView button_deconnection = findViewById(R.id.button_deconnexion);
         button_deconnection.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-            builder.setMessage("Voulez-vous vraiment vous deconnecter ?");
+            builder.setMessage(resources.getString(R.string.disconnection_message));
 
-            builder.setNegativeButton("Non", null);
-            builder.setPositiveButton("Oui", (dialogInterface, i) -> {
+            builder.setNegativeButton(resources.getString(R.string.negative_response), null);
+            builder.setPositiveButton(resources.getString(R.string.positive_response), (dialogInterface, i) -> {
                 user_connected.deleteUserCOnnected();
                 Intent deconnexion = new Intent(getApplicationContext(), RunAppActivity.class);
                 startActivity(deconnexion);
@@ -107,106 +104,59 @@ public class UserProfilActivity extends AppCompatActivity {
                     .show();
         });
 
-        this.button_parameter = findViewById(R.id.button_parametre);
+        ImageView button_parameter = findViewById(R.id.button_parametre);
         button_parameter.setOnClickListener(v -> {
             Intent parameter = new Intent(getApplicationContext(), UserSettingActivity.class);
             startActivity(parameter);
             finish();
         });
 
-        this.button_map = findViewById(R.id.button_map);
+        ImageView button_map = findViewById(R.id.button_map);
         button_map.setOnClickListener(v -> {
             Intent go_map = new Intent(getApplicationContext(), MapActivity.class);
             startActivity(go_map);
             finish();
         });
 
-        textViewUserName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText editText_new_name = new EditText(UserProfilActivity.this);
-                editText_new_name.setHint("Nouveau prenom ");
+        textViewUserName.setOnClickListener(view -> {
+            EditText editText_new_name = new EditText(UserProfilActivity.this);
+            editText_new_name.setHint(resources.getString(R.string.new_firstname_message));
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-                builder.setMessage("Modification du prenom ");
-                builder.setView(editText_new_name);
+            AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+            builder.setMessage(resources.getString(R.string.new_firstname_title_message));
+            builder.setView(editText_new_name);
 
-                builder.setNegativeButton("Annuler", null);
-                builder.setPositiveButton("Modifier", (dialogInterface, i) -> {
-                    new_name = editText_new_name.getText().toString();
-                    new_lastname = textViewUserLastname.getText().toString();
-                    action = "update_name";
-                    UpdateData = new UpdateDataAsyncTask();
-                    UpdateData.execute();
-                })
-                        .create()
-                        .show();
-            }
+            builder.setNegativeButton(resources.getString(R.string.cancel_message), null);
+            builder.setPositiveButton(resources.getString(R.string.modify_message), (dialogInterface, i) -> {
+                new_name = editText_new_name.getText().toString();
+                new_lastname = textViewUserLastname.getText().toString();
+                action = "update_name";
+                UpdateData = new UpdateDataAsyncTask();
+                UpdateData.execute();
+            })
+                    .create()
+                    .show();
         });
 
-        textViewUserLastname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText editText_new_lastname = new EditText(UserProfilActivity.this);
-                editText_new_lastname.setHint("Nouveau nom ");
+        textViewUserLastname.setOnClickListener(view -> {
+            EditText editText_new_lastname = new EditText(UserProfilActivity.this);
+            editText_new_lastname.setHint(resources.getString(R.string.new_lastname_message));
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-                builder.setMessage("Modification du nom ");
-                builder.setView(editText_new_lastname);
+            AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
+            builder.setMessage(resources.getString(R.string.new_lastname_title_message));
+            builder.setView(editText_new_lastname);
 
-                builder.setNegativeButton("Annuler", null);
-                builder.setPositiveButton("Modifier", (dialogInterface, i) -> {
-                    new_lastname = editText_new_lastname.getText().toString();
-                    new_name = textViewUserName.getText().toString();
-                    action = "update_name";
-                    UpdateData = new UpdateDataAsyncTask();
-                    UpdateData.execute();
-                })
-                        .create()
-                        .show();
-            }
+            builder.setNegativeButton(resources.getString(R.string.cancel_message), null);
+            builder.setPositiveButton(resources.getString(R.string.modify_message), (dialogInterface, i) -> {
+                new_lastname = editText_new_lastname.getText().toString();
+                new_name = textViewUserName.getText().toString();
+                action = "update_name";
+                UpdateData = new UpdateDataAsyncTask();
+                UpdateData.execute();
+            })
+                    .create()
+                    .show();
         });
-
-//        user_title_name.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                LinearLayout layout = new LinearLayout(UserProfilActivity.this);
-//                layout.setOrientation(LinearLayout.VERTICAL);
-//
-//                EditText editText_lastname = new EditText(UserProfilActivity.this);
-//                editText_lastname.setHint("Modifiez votre nom");
-//                layout.addView(editText_lastname);
-//
-//                EditText editText_name = new EditText(UserProfilActivity.this);
-//                editText_name.setHint("Modifiez votre prénom");
-//                layout.addView(editText_name);
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-//                builder.setMessage("Modifiez vos informations ");
-//                builder.setView(layout);
-//
-//                builder.setNegativeButton("Annuler", null);
-//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        new_name = editText_name.getText().toString();
-//                        new_lastname = editText_lastname.getText().toString();
-//                        if((new_name.equals("") && (!new_lastname.equals(""))) || ((!new_name.equals("")) && new_lastname.equals("")) || ((!new_name.equals("")) && (!new_lastname.equals(""))) ){
-//                            action = "update_name";
-//                            UpdateData = new UpdateDataAsyncTask();
-//                            UpdateData.execute();
-//                        } else {
-//                            AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
-//                            builder.setMessage("La modification à échoué");
-//                            builder.setPositiveButton("J'ai compris", null);
-//                            builder.show();
-//                        }
-//                    }
-//                });
-//                builder.show();
-//            }
-//        });
-
 
         textViewUserPassword.setOnClickListener(view -> {
             LinearLayout layout = new LinearLayout(UserProfilActivity.this);
@@ -224,8 +174,8 @@ public class UserProfilActivity extends AppCompatActivity {
             builder.setMessage("Modification du mot de passe ");
             builder.setView(layout);
 
-            builder.setNegativeButton("Annuler", null);
-            builder.setPositiveButton("Modifier", (dialogInterface, i) -> {
+            builder.setNegativeButton(resources.getString(R.string.cancel_message), null);
+            builder.setPositiveButton(resources.getString(R.string.modify_message), (dialogInterface, i) -> {
                 actual_password = editText_actual_password.getText().toString();
                 new_password = editText_new_password.getText().toString();
                 if((!actual_password.equals("")) && (!new_password.equals(""))){
@@ -251,8 +201,8 @@ public class UserProfilActivity extends AppCompatActivity {
             builder.setMessage("Modification de l'adresse mail ");
             builder.setView(editText_new_email);
 
-            builder.setNegativeButton("Annuler", null);
-            builder.setPositiveButton("Modifier", (dialogInterface, i) -> {
+            builder.setNegativeButton(resources.getString(R.string.cancel_message), null);
+            builder.setPositiveButton(resources.getString(R.string.modify_message), (dialogInterface, i) -> {
                 new_email = editText_new_email.getText().toString();
                 action = "update_adressmail";
                 UpdateData = new UpdateDataAsyncTask();
@@ -266,7 +216,6 @@ public class UserProfilActivity extends AppCompatActivity {
             /**
              * Quand l'utilisateur clique sur le bouton Calendrier il y a une popup qui s'ouvre lui permettant
              * de choisir une date de naissance.
-             * @param v
              */
             @Override
             public void onClick(View v) {
@@ -289,51 +238,48 @@ public class UserProfilActivity extends AppCompatActivity {
             /**
              * Recuperation des valeurs saisie par l'utilisateur dans le calendrier
              * pour ensuite les stockés dans un string
-             * @param datePicker
-             * @param year  année
-             * @param month mois
-             * @param day   jour
              */
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 new_birthday = "" + year + "/" + month + "/" + day;
-                if(month <10 && day <10) {
+                if(month <10 && day <10)
                     new_birthday2 = "" + year + "-0" + month + "-0" + day;
-                } else if (month<10 && day>9){
+                 else if (month<10 && day>9)
                     new_birthday2 = "" + year + "-0" + month + "-" + day;
-                } else if (month>9 && day<10){
+                 else if (day<10)
                     new_birthday2 = "" + year + "-" + month + "-0" + day;
-                } else if (month>9 && day>9){
+                 else if (day>9)
                     new_birthday2 = "" + year + "-" + month + "-" + day;
-                }
+
                 action = "update_birthday";
                 UpdateData = new UpdateDataAsyncTask();
                 UpdateData.execute();
             }
         };
 
+        String[] goals = resources.getStringArray(R.array.goal);
         textViewUserGoal.setOnClickListener(view -> {
             LinearLayout layout = new LinearLayout(UserProfilActivity.this);
             layout.setOrientation(LinearLayout.VERTICAL);
 
             Button textView_1 = new Button(UserProfilActivity.this);
-            textView_1.setText("Date Place");
+            textView_1.setText(goals[0]);
             layout.addView(textView_1);
 
             Button textView_2 = new Button(UserProfilActivity.this);
-            textView_2.setText("Un lieu pour entre potes");
+            textView_2.setText(goals[1]);
             layout.addView(textView_2);
 
             Button textView_3 = new Button(UserProfilActivity.this);
-            textView_3.setText("Un lieu pour sortir avec mes parents");
+            textView_3.setText(goals[2]);
             layout.addView(textView_3);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(UserProfilActivity.this);
             builder.setMessage("Modification du but ");
             builder.setView(layout);
 
-            builder.setNegativeButton("Annuler", null);
+            builder.setNegativeButton(resources.getString(R.string.cancel_message), null);
 
             textView_1.setOnClickListener(v -> {
                 action = "update_goal";
@@ -378,6 +324,7 @@ public class UserProfilActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("StaticFieldLeak")
     public class UpdateDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
         /**
@@ -385,8 +332,6 @@ public class UserProfilActivity extends AppCompatActivity {
          * les transmets grace a la methode makeSerciveCall
          * et ensuite récupere un objet JSON au format String
          * on récupere les valeurs présente au format JSON et on les stock dans des varaibles
-         * @param params
-         * @return
          */
         @Override
         protected Void doInBackground(Void... params) {
@@ -398,20 +343,27 @@ public class UserProfilActivity extends AppCompatActivity {
 
             nameValuePair.add(new BasicNameValuePair("action", action));
             nameValuePair.add(new BasicNameValuePair("user_id", user_id));
-            if (action.equals("update_name")){
-                nameValuePair.add(new BasicNameValuePair("new_name", new_name));
-                nameValuePair.add(new BasicNameValuePair("new_lastname", new_lastname.toUpperCase()));
-            } else if (action.equals("update_birthday")){
-                nameValuePair.add(new BasicNameValuePair("new_birthday", new_birthday));
-            } else if (action.equals("update_adressmail")){
-                nameValuePair.add(new BasicNameValuePair("new_adressmail", new_email.toLowerCase()));
-            } else if (action.equals("update_password")){
-                nameValuePair.add(new BasicNameValuePair("actual_password", actual_password));
-                nameValuePair.add(new BasicNameValuePair("new_password", new_password));
-            } else if (action.equals("update_goal")){
-                nameValuePair.add(new BasicNameValuePair("new_goal", new_goal));
+            switch (action) {
+                case "update_name":
+                    nameValuePair.add(new BasicNameValuePair("new_name", new_name));
+                    nameValuePair.add(new BasicNameValuePair("new_lastname", new_lastname.toUpperCase()));
+                    break;
+                case "update_birthday":
+                    nameValuePair.add(new BasicNameValuePair("new_birthday", new_birthday));
+                    break;
+                case "update_adressmail":
+                    nameValuePair.add(new BasicNameValuePair("new_adressmail", new_email.toLowerCase()));
+                    break;
+                case "update_password":
+                    nameValuePair.add(new BasicNameValuePair("actual_password", actual_password));
+                    nameValuePair.add(new BasicNameValuePair("new_password", new_password));
+                    break;
+                case "update_goal":
+                    nameValuePair.add(new BasicNameValuePair("new_goal", new_goal));
+                    break;
             }
 
+            String urlUpdate = "https://dateplaceapp.000webhostapp.com/update_datas.php";
             String jsonStr = sh.makeServiceCall(urlUpdate, ServiceHandler.POST, nameValuePair);
 
             Log.d("Response: ", jsonStr);
@@ -436,35 +388,41 @@ public class UserProfilActivity extends AppCompatActivity {
                 builder.setPositiveButton("J'ai compris", null);
                 builder.show();
             } else {
-                if (action.equals("update_name")){
-                    if (new_lastname.equals("")){
-                        new_lastname = user_lastname;
-                    } else if (new_name.equals("")){
-                        new_name = user_firstname;
-                    }
-                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),new_lastname.toUpperCase(),new_name, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
-                    user_connected.updateDataUser(Integer.parseInt(user_id),new_lastname.toUpperCase(),new_name, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
-                    user_title_name.setText(new_lastname.toUpperCase() + " " + new_name);
-                    textViewUserName.setText(new_name);
-                    textViewUserLastname.setText(new_lastname.toUpperCase());
-                } else if (action.equals("update_birthday")){
-                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),user_lastname,user_firstname, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(),new_birthday2, textViewUserGoal.getText().toString());
-                    user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(),new_birthday2, textViewUserGoal.getText().toString());
-                    textViewUserBirthday.setText(new_birthday2);
-                } else if (action.equals("update_adressmail")){
-                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),user_lastname,user_firstname,new_email.toLowerCase(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
-                    user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname,new_email.toLowerCase(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
-                    textViewUserEmail.setText(new_email.toLowerCase());
-                } else if (action.equals("update_password")){
-                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),user_lastname,user_firstname, textViewUserEmail.getText().toString(),new_password, textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
-                    user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname, textViewUserEmail.getText().toString(),new_password, textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
-                } else if (action.equals("update_goal")){
-                    user_connected.updateDataUserConnected(Integer.parseInt(user_id),user_lastname,user_firstname, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(),new_goal);
-                    user_connected.updateDataUser(Integer.parseInt(user_id),user_lastname,user_firstname, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(),new_goal);
-                    textViewUserGoal.setText(new_goal);
-                    Intent go_before = new Intent(getApplicationContext(), UserProfilActivity.class);
-                    startActivity(go_before);
-                    finish();
+                switch (action) {
+                    case "update_name":
+                        if (new_lastname.equals("")) {
+                            new_lastname = user_lastname;
+                        } else if (new_name.equals("")) {
+                            new_name = user_firstname;
+                        }
+                        user_connected.updateDataUserConnected(Integer.parseInt(user_id), new_lastname.toUpperCase(), new_name, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
+                        user_connected.updateDataUser(Integer.parseInt(user_id), new_lastname.toUpperCase(), new_name, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
+                        user_title_name.setText(new_lastname.toUpperCase() + " " + new_name);
+                        textViewUserName.setText(new_name);
+                        textViewUserLastname.setText(new_lastname.toUpperCase());
+                        break;
+                    case "update_birthday":
+                        user_connected.updateDataUserConnected(Integer.parseInt(user_id), user_lastname, user_firstname, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(), new_birthday2, textViewUserGoal.getText().toString());
+                        user_connected.updateDataUser(Integer.parseInt(user_id), user_lastname, user_firstname, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(), new_birthday2, textViewUserGoal.getText().toString());
+                        textViewUserBirthday.setText(new_birthday2);
+                        break;
+                    case "update_adressmail":
+                        user_connected.updateDataUserConnected(Integer.parseInt(user_id), user_lastname, user_firstname, new_email.toLowerCase(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
+                        user_connected.updateDataUser(Integer.parseInt(user_id), user_lastname, user_firstname, new_email.toLowerCase(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
+                        textViewUserEmail.setText(new_email.toLowerCase());
+                        break;
+                    case "update_password":
+                        user_connected.updateDataUserConnected(Integer.parseInt(user_id), user_lastname, user_firstname, textViewUserEmail.getText().toString(), new_password, textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
+                        user_connected.updateDataUser(Integer.parseInt(user_id), user_lastname, user_firstname, textViewUserEmail.getText().toString(), new_password, textViewUserBirthday.getText().toString(), textViewUserGoal.getText().toString());
+                        break;
+                    case "update_goal":
+                        user_connected.updateDataUserConnected(Integer.parseInt(user_id), user_lastname, user_firstname, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(), new_goal);
+                        user_connected.updateDataUser(Integer.parseInt(user_id), user_lastname, user_firstname, textViewUserEmail.getText().toString(), textViewUserPassword.getText().toString(), textViewUserBirthday.getText().toString(), new_goal);
+                        textViewUserGoal.setText(new_goal);
+                        Intent go_before = new Intent(getApplicationContext(), UserProfilActivity.class);
+                        startActivity(go_before);
+                        finish();
+                        break;
                 }
             }
         }

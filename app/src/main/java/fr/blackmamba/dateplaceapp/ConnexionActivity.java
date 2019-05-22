@@ -11,15 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import fr.blackmamba.dateplaceapp.backgroundtask.ConnexionInternet;
 import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
@@ -48,11 +45,9 @@ public class ConnexionActivity extends AppCompatActivity {
 
         user_connected = new DatabaseHelper(this);
 
-        //Affectation des champs à des variables
         email = (EditText) findViewById(R.id.connexion_identifier);
         password = (EditText) findViewById(R.id.connexion_password);
 
-        //Ajout d'un écouteur sur le bouton de retour
         this.button_goback = findViewById(R.id.button_goback);
         button_goback.setOnClickListener(new View.OnClickListener() {
 
@@ -70,7 +65,6 @@ public class ConnexionActivity extends AppCompatActivity {
             }
         });
 
-        //Ajout d'un écouteur sur le bouton de conection
         this.button_connect = findViewById(R.id.button_connect);
         button_connect.setOnClickListener(new View.OnClickListener() {
             /**

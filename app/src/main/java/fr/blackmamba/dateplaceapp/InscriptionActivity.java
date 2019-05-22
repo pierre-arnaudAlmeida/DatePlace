@@ -17,16 +17,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import fr.blackmamba.dateplaceapp.backgroundtask.ConnexionInternet;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;

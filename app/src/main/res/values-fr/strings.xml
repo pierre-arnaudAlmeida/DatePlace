@@ -41,9 +41,19 @@
     <string name="delete_user">Supprimer compte</string>
     <string name="authorization">Autorisation</string>
     <string name="legal_notice">Mention légale</string>
-
     <string name="user_name"></string>
     <string name="user_firstname"></string>
     <string name="user_birthday"></string>
     <string name="user_goal"></string>
+
+    <string name="disconnection_message">Voulez-vous vraiment vous deconnecter ?</string>
+    <string name="positive_response">Oui</string>
+    <string name="negative_response">Non</string>
+    <string name="new_firstname_message">Nouveau prenom</string>
+    <string name="new_lastname_message">Nouveau nom</string>
+    <string name="new_firstname_title_message">Modification du prenom</string>
+    <string name="new_lastname_title_message">Modification du nom</string>
+    <string name="cancel_message">Annuler</string>
+    <string name="modify_message">Modifier</string>
+
 </resources>
