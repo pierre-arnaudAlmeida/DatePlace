@@ -1,5 +1,6 @@
 package fr.blackmamba.dateplaceapp.place;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
@@ -11,6 +12,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import fr.blackmamba.dateplaceapp.R;
+import fr.blackmamba.dateplaceapp.map.MapActivity;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -69,5 +71,13 @@ public class PlaceActivity extends AppCompatActivity {
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent back = new Intent(getApplicationContext(), MapActivity.class);
+        startActivity(back);
+        finish();
     }
 }

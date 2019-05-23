@@ -207,4 +207,12 @@ public class ConnexionActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent back = new Intent(getApplicationContext(), RunAppActivity.class);
+        startActivity(back);
+        finish();
+    }
 }

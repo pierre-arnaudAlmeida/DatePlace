@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".launcher.ConnexionActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".launcher.ConnexionActivity">
 
     <RelativeLayout
         android:id="@+id/connexion_image_layout"
@@ -115,7 +115,7 @@
                     android:layout_marginStart="@dimen/button_connect_marginStart"
                     android:layout_marginTop="@dimen/button_connect_marginTop"
                     android:layout_marginEnd="@dimen/button_connect_marginEnd"
-                    android:background="@drawable/background_button_connexion"
+                    android:background="@drawable/background_button_blue"
                     android:text="@string/button_connect_text"
                     android:textColor="#000"
                     android:textSize="@dimen/button_text_size" />
@@ -135,7 +135,7 @@
                     android:layout_marginTop="@dimen/button_goback_marginTop"
                     android:layout_marginEnd="@dimen/button_goback_marginEnd"
                     android:layout_marginBottom="@dimen/button_goback_marginBottom"
-                    android:background="@drawable/background_button_connexion"
+                    android:background="@drawable/background_button_blue"
                     android:text="@string/button_goback_text"
                     android:textColor="#000"
                     android:textSize="@dimen/button_text_size" />
@@ -148,7 +148,7 @@
                     android:layout_marginTop="@dimen/button_go_inscription_marginTop"
                     android:layout_marginEnd="@dimen/button_go_inscription_marginEnd"
                     android:layout_marginBottom="@dimen/button_go_inscription_marginBottom"
-                    android:background="@drawable/background_button_connexion"
+                    android:background="@drawable/background_button_blue"
                     android:text="@string/button_sign_up"
                     android:textColor="#000"
                     android:textSize="@dimen/button_text_size" />

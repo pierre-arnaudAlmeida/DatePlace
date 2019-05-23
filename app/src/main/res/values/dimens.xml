@@ -74,13 +74,13 @@
 
     <dimen name="title_field_inscription_width">180dp</dimen>
     <dimen name="title_field_inscription_height">17dp</dimen>
-    <dimen name="title_field_inscription_marginStart">100dp</dimen>
-    <dimen name="title_field_inscription_marginTop">39dp</dimen>
+    <dimen name="title_field_inscription_marginStart">50dp</dimen>
+    <dimen name="title_field_inscription_marginTop">30dp</dimen>
 
     <dimen name="input_text_inscription_width">180dp</dimen>
     <dimen name="input_text_inscription_height">30dp</dimen>
-    <dimen name="input_text_inscription_marginStart">100dp</dimen>
-    <dimen name="input_text_inscription_marginTop">25dp</dimen>
+    <dimen name="input_text_inscription_marginStart">50dp</dimen>
+    <dimen name="input_text_inscription_marginTop">10dp</dimen>
     <dimen name="input_text_inscription_marginEnd">100dp</dimen>
 
     <dimen name="button_inscrip_width">120dp</dimen>
@@ -88,6 +88,14 @@
     <dimen name="button_inscrip_marginStart">15dp</dimen>
     <dimen name="button_inscrip_marginEnd">80dp</dimen>
     <dimen name="button_inscrip_marginBottom">40dp</dimen>
+    <dimen name="button_inscrip_marginTop">30</dimen>
+
+    <dimen name="button_back_width">80dp</dimen>
+    <dimen name="button_back_height">40dp</dimen>
+    <dimen name="button_back_marginStart">50dp</dimen>
+    <dimen name="button_back_marginBottom">40dp</dimen>
+    <dimen name="button_back_marginTop">30dp</dimen>
+    <dimen name="button_back_marginEnd">40dp</dimen>
 
     <dimen name ="button_go_inscription_width">200dp</dimen>
     <dimen name ="button_go_inscription_height">40dp</dimen>
@@ -95,5 +103,6 @@
     <dimen name ="button_go_inscription_marginEnd">20dp</dimen>
     <dimen name ="button_go_inscription_marginBottom">40dp</dimen>
     <dimen name="button_go_inscription_marginTop">30dp</dimen>
+
 
 </resources>

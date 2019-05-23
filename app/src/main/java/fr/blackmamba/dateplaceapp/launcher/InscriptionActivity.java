@@ -237,4 +237,12 @@ public class InscriptionActivity extends AppCompatActivity implements AdapterVie
                }
         }
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent back = new Intent(getApplicationContext(), RunAppActivity.class);
+        startActivity(back);
+        finish();
+    }
 }

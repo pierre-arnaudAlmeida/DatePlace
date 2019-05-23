@@ -425,4 +425,12 @@ public class UserProfilActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent back = new Intent(getApplicationContext(), MapActivity.class);
+        startActivity(back);
+        finish();
+    }
 }

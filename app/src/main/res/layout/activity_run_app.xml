@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/frameLayout"
     tools:context=".launcher.RunAppActivity"
-    android:background="#F0FF3F">
+    android:background="@drawable/grad">
 
     <!-- Logo Application-->
     <ImageView
@@ -40,7 +40,7 @@
         android:layout_marginStart="@dimen/button_connexion_run_app_marginStart"
         android:layout_marginTop="@dimen/button_connexion_run_app_marginTop"
         android:layout_marginEnd="@dimen/button_connexion_run_app_marginEnd"
-        android:background="@drawable/background_button_connexion"
+        android:background="@drawable/background_button_white"
         android:text="@string/button_connexion_text"
         android:textSize="@dimen/button_text_size"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
         android:layout_marginStart="@dimen/button_inscription_run_app_marginStart"
         android:layout_marginTop="@dimen/button_inscription_run_app_marginTop"
         android:layout_marginEnd="@dimen/button_inscription_run_app_marginEnd"
-        android:background="@drawable/background_button_connexion"
+        android:background="@drawable/background_button_white"
         android:text="@string/button_inscription_text"
         android:textSize="@dimen/button_text_size"
         app:layout_constraintEnd_toEndOf="parent"
