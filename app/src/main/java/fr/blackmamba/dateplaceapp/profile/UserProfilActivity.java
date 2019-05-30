@@ -483,7 +483,8 @@ public class UserProfilActivity extends AppCompatActivity {
             protected void onPostExecute(Bitmap b) {
                 super.onPostExecute(b);
                 loading.dismiss();
-                imageView.setImageBitmap(b);
+                Bitmap c = getCroppedBitmap(b);
+                imageView.setImageBitmap(c);
             }
 
             @Override
