@@ -1,15 +1,24 @@
 package fr.blackmamba.dateplaceapp.profile;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,18 +27,31 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
-import fr.blackmamba.dateplaceapp.map.MapActivity;
+
 import fr.blackmamba.dateplaceapp.R;
 import fr.blackmamba.dateplaceapp.backgroundtask.DatabaseHelper;
 import fr.blackmamba.dateplaceapp.backgroundtask.ServiceHandler;
 import fr.blackmamba.dateplaceapp.launcher.RunAppActivity;
+import fr.blackmamba.dateplaceapp.map.MapActivity;
+
+
 
 public class UserProfilActivity extends AppCompatActivity {
 
@@ -57,12 +79,29 @@ public class UserProfilActivity extends AppCompatActivity {
     private String new_goal;
     private String action;
     private DatePickerDialog.OnDateSetListener user_birthday_Listener;
+
+    public static final String UPLOAD_URL = "https://dateplaceapp.000webhostapp.com/upload.php";
+    public static final String UPLOAD_KEY = "image";
+    public static final String UPLOAD_USER = "user_id";
+    private int PICK_IMAGE_REQUEST = 1;
+    private Button buttonChoose;
+    private Button buttonUpload;
+    private ImageView imageView;
+    private Bitmap bitmap;
+    private Uri filePath;
+
+
     UpdateDataAsyncTask UpdateData = new UpdateDataAsyncTask();
     DatabaseHelper user_connected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profil);
+
+        this.buttonChoose = findViewById(R.id.buttonChoose);
+        this.buttonUpload = findViewById(R.id.buttonUpload);
+        //this.buttonView = findViewById(R.id.buttonViewImage);
+        this.imageView = findViewById(R.id.pp);
 
         this.user_title_name = findViewById(R.id.user_name);
         this.textViewUserEmail = findViewById(R.id.user_email);
@@ -118,6 +157,15 @@ public class UserProfilActivity extends AppCompatActivity {
             startActivity(go_map);
             finish();
         });
+
+        buttonChoose.setOnClickListener (v -> {
+            showFileChooser();
+        });
+
+        buttonUpload.setOnClickListener(v -> {
+            uploadImage();
+        });
+
 
         textViewUserName.setOnClickListener(view -> {
             EditText editText_new_name = new EditText(UserProfilActivity.this);
@@ -324,7 +372,143 @@ public class UserProfilActivity extends AppCompatActivity {
             });
             builder.show();
         });
+        getImage();
     }
+
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    public Bitmap getCroppedBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        //canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+                bitmap.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
+        //return _bmp;
+        return output;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                Bitmap bitmap2 = getCroppedBitmap(bitmap);
+                imageView.setImageBitmap(bitmap2);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    private void uploadImage(){
+        class UploadImage extends AsyncTask<Bitmap,Void,String>{
+
+            ProgressDialog loading;
+            RequestHandler rh = new RequestHandler();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(UserProfilActivity.this, "Uploading Image", "Please wait...",true,true);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Bitmap... params) {
+                Bitmap bitmap = params[0];
+                String uploadImage = getStringImage(bitmap);
+
+                HashMap<String,String> data = new HashMap<>();
+                data.put(UPLOAD_KEY, uploadImage);
+                data.put(UPLOAD_USER,user_id);
+
+                String result = rh.sendPostRequest(UPLOAD_URL,data);
+
+                return result;
+            }
+        }
+
+        UploadImage ui = new UploadImage();
+        ui.execute(bitmap);
+    }
+
+    private void getImage() {
+        String id = user_id;
+        class GetImage extends AsyncTask<String,Void,Bitmap>{
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(UserProfilActivity.this, "Uploading...", null,true,true);
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap b) {
+                super.onPostExecute(b);
+                loading.dismiss();
+                imageView.setImageBitmap(b);
+            }
+
+            @Override
+            protected Bitmap doInBackground(String... params) {
+                String id = params[0];
+                String add = "https://dateplaceapp.000webhostapp.com/imageget.php?user_id="+id;
+                System.out.println(add);
+                URL url = null;
+                Bitmap image = null;
+                try {
+                    url = new URL(add);
+                    image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return image;
+            }
+        }
+
+        GetImage gi = new GetImage();
+        gi.execute(id);
+    }
+
 
     public class UpdateDataAsyncTask extends AsyncTask<Void, Void, Void> {
         /**

@@ -105,7 +105,7 @@ public class RunAppActivity extends AppCompatActivity {
          * Methode qui convertit les différentes informations a transmettre au serveur dans un tableau
          * les transmets grace a la methode makeSerciveCall
          * et ensuite récupere un objet JSON au format String
-         * on récupere les valeurs présente au format JSON et on les stock dans des varaibles
+         * on récupere les valeurs présente au format JSON et on les stock dans des variables
          *
          * @param params
          * @return
