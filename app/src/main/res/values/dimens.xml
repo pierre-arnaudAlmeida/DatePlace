@@ -46,24 +46,24 @@
 
     <dimen name="connexion_identifier_width">320dp</dimen>
     <dimen name="connexion_identifier_height">40dp</dimen>
-    <dimen name="connexion_identifier_marginStart">30dp</dimen>
+    <dimen name="connexion_identifier_marginStart">20dp</dimen>
     <dimen name="connexion_identifier_marginTop">40dp</dimen>
     <dimen name="connexion_identifier_marginEnd">20dp</dimen>
     <dimen name="connexion_identifier_paddingTop">4dp</dimen>
-    <dimen name="connexion_identifier_paddingLeft">20dp</dimen>
+    <dimen name="connexion_identifier_paddingLeft">130dp</dimen>
 
     <dimen name="connexion_password_width">320dp</dimen>
     <dimen name="connexion_password_height">40dp</dimen>
-    <dimen name="connexion_password_marginStart">30dp</dimen>
+    <dimen name="connexion_password_marginStart">20dp</dimen>
     <dimen name="connexion_password_marginTop">10dp</dimen>
     <dimen name="connexion_password_marginEnd">20dp</dimen>
     <dimen name="connexion_password_paddingTop">4dp</dimen>
-    <dimen name="connexion_password_paddingLeft">20dp</dimen>
+    <dimen name="connexion_password_paddingLeft">120dp</dimen>
 
     <dimen name="button_connect_width">320dp</dimen>
     <dimen name="button_connect_height">40dp</dimen>
     <dimen name="button_connect_marginTop">20dp</dimen>
-    <dimen name="button_connect_marginStart">30dp</dimen>
+    <dimen name="button_connect_marginStart">20dp</dimen>
     <dimen name="button_connect_marginEnd">20dp</dimen>
     <!-- activity_inscription -->
     <dimen name="logo_inscription_app_width">100dp</dimen>
